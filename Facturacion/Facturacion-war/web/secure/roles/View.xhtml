@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RolesViewDlg" widgetVar="RolesViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewRolesTitle}">
+            <h:form id="RolesViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{rolesController.selected != null}">
+                        <h:outputText value="#{bundle.ViewRolesLabel_nombreRol}"/>
+                        <h:outputText value="#{rolesController.selected.nombreRol}" title="#{bundle.ViewRolesTitle_nombreRol}"/>
+                        <h:outputText value="#{bundle.ViewRolesLabel_rolescol}"/>
+                        <h:outputText value="#{rolesController.selected.rolescol}" title="#{bundle.ViewRolesTitle_rolescol}"/>
+                        <h:outputText value="#{bundle.ViewRolesLabel_limiteDia}"/>
+                        <h:outputText value="#{rolesController.selected.limiteDia}" title="#{bundle.ViewRolesTitle_limiteDia}"/>
+                        <h:outputText value="#{bundle.ViewRolesLabel_limiteMes}"/>
+                        <h:outputText value="#{rolesController.selected.limiteMes}" title="#{bundle.ViewRolesTitle_limiteMes}"/>
+                        <h:outputText value="#{bundle.ViewRolesLabel_permisoVenta}"/>
+                        <p:selectBooleanCheckbox value="#{rolesController.selected.permisoVenta}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewRolesLabel_permisoInventarios}"/>
+                        <p:selectBooleanCheckbox value="#{rolesController.selected.permisoInventarios}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewRolesLabel_permisosOrdenesCompra}"/>
+                        <p:selectOneMenu id="permisosOrdenesCompra" value="#{rolesController.selected.permisosOrdenesCompra}" disabled="true">
+                            <f:selectItem itemLabel="#{bundle.None}" itemValue="0" />
+                            <f:selectItem itemLabel="#{bundle.View}" itemValue="1" />
+                            <f:selectItem itemLabel="#{bundle.Admin}" itemValue="2" />
+                            <f:selectItem itemLabel="#{bundle.Authorize}" itemValue="3" />
+                        </p:selectOneMenu>
+                        <h:outputText value="#{bundle.ViewRolesLabel_permisosReportes}"/>
+                        <p:selectOneMenu id="permisosReportes" value="#{rolesController.selected.permisosReportes}" disabled="true">
+                            <f:selectItem itemLabel="#{bundle.None}" itemValue="0" />
+                            <f:selectItem itemLabel="#{bundle.View}" itemValue="1" />
+                            <f:selectItem itemLabel="#{bundle.Admin}" itemValue="2" />
+                            <f:selectItem itemLabel="#{bundle.Authorize}" itemValue="3" />
+                        </p:selectOneMenu>
+                        <h:outputText value="#{bundle.ViewRolesLabel_permisosAdministracion}"/>
+                        <p:selectOneMenu id="permisosAdministracion" value="#{rolesController.selected.permisosAdministracion}" disabled="true" >
+                            <f:selectItem itemLabel="#{bundle.None}" itemValue="0" />
+                            <f:selectItem itemLabel="#{bundle.View}" itemValue="1" />
+                            <f:selectItem itemLabel="#{bundle.Admin}" itemValue="2" />
+                            <f:selectItem itemLabel="#{bundle.Authorize}" itemValue="3" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="RolesViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
