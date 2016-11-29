@@ -14,11 +14,41 @@
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>1</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    <security-constraint>
+        <display-name>securesite</display-name>
+        <web-resource-collection>
+            <web-resource-name>securesite</web-resource-name>
+            <description>Sitio seguro</description>
+            <url-pattern>/secure/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>securesite</description>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>facessecuresite</display-name>
+        <web-resource-collection>
+            <web-resource-name>facessecuresite</web-resource-name>
+            <description/>
+            <url-pattern>/faces/secure/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>securesite</description>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>file</realm-name>
+    </login-config>
+    <security-role>
+        <description>administrator</description>
+        <role-name>admin</role-name>
+    </security-role>
 </web-app>
