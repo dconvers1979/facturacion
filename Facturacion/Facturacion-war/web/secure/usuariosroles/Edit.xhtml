@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuariosrolesEditDlg" widgetVar="UsuariosrolesEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditUsuariosrolesTitle}">
+            <h:form id="UsuariosrolesEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usuariosrolesController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditUsuariosrolesLabel_idroles}" for="idroles" />
+                        <p:selectOneMenu id="idroles" value="#{usuariosrolesController.selected.idroles}" required="true" requiredMessage="#{bundle.EditUsuariosrolesRequiredMessage_idroles}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{rolesController.itemsAvailableSelectOne}"
+                                           var="idrolesItem"
+                                           itemLabel="#{idrolesItem.nombreRol}"
+                                           itemValue="#{idrolesItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditUsuariosrolesLabel_idusuarios}" for="idusuarios" />
+                        <p:selectOneMenu id="idusuarios" value="#{usuariosrolesController.selected.idusuarios}" required="true" requiredMessage="#{bundle.EditUsuariosrolesRequiredMessage_idusuarios}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuariosController.itemsAvailableSelectOne}"
+                                           var="idusuariosItem"
+                                           itemLabel="#{idusuariosItem.login}"
+                                           itemValue="#{idusuariosItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuariosrolesController.update}" value="#{bundle.Save}" update="display,:UsuariosrolesListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsuariosrolesEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UsuariosrolesEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
