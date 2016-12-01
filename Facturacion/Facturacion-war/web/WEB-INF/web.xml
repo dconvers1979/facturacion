@@ -14,7 +14,7 @@
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>1</session-timeout>
+        <session-timeout>10</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
@@ -45,7 +45,8 @@
     </security-constraint>
     <login-config>
         <auth-method>BASIC</auth-method>
-        <realm-name>file</realm-name>
+        <realm-name>facturacionRealm</realm-name>
+        <!--realm-name>file</realm-name-->
     </login-config>
     <security-role>
         <description>administrator</description>
