@@ -5,8 +5,14 @@
  */
 package com.firefly.product.facturacion.negocio.session;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.EntityManager;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import javax.validation.Validator;
 
 /**
  *
@@ -27,7 +33,27 @@ public abstract class AbstractFacade<T> {
     }
 
     public void edit(T entity) {
-        getEntityManager().merge(entity);
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<T>> constraintViolations = validator.validate(entity);
+        if(constraintViolations.size() > 0){
+            Iterator<ConstraintViolation<T>> iterator = constraintViolations.iterator();
+            while(iterator.hasNext()){
+                ConstraintViolation<T> cv = iterator.next();
+                System.out.println("----------------------------------");
+                System.out.println("----------------------------------");
+                System.out.println("----------------------------------");
+                System.out.println("----------------------------------");
+                System.out.println("----------------------------------");
+                System.out.println("----------------------------------");
+                System.out.println(cv.getRootBeanClass().getName()+"."+cv.getPropertyPath() + " " +cv.getMessage());
+
+                //JsfUtil.addErrorMessage(cv.getRootBeanClass().getSimpleName()+"."+cv.getPropertyPath() + " " +cv.getMessage());
+            }
+        }else{
+            getEntityManager().merge(entity);
+        }
+        //getEntityManager().merge(entity);
     }
 
     public void remove(T entity) {
