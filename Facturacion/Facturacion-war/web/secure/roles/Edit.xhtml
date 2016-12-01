@@ -13,7 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{rolesController.selected != null}">
                         <p:outputLabel value="#{bundle.EditRolesLabel_nombreRol}" for="nombreRol" />
-                        <p:inputText id="nombreRol" value="#{rolesController.selected.nombreRol}" title="#{bundle.EditRolesTitle_nombreRol}" />
+                        <p:inputText id="nombreRol" disabled="true" value="#{rolesController.selected.nombreRol}" title="#{bundle.EditRolesTitle_nombreRol}" />
                         <p:outputLabel value="#{bundle.EditRolesLabel_rolescol}" for="rolescol" />
                         <p:inputText id="rolescol" value="#{rolesController.selected.rolescol}" title="#{bundle.EditRolesTitle_rolescol}" />
                         <p:outputLabel value="#{bundle.EditRolesLabel_limiteDia}" for="limiteDia" />
