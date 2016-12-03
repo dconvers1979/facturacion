@@ -30,8 +30,14 @@
                         <p:calendar id="fechaNacimiento" disabled="true" pattern="MM/dd/yyyy HH:mm:ss" value="#{usuariosController.selected.fechaNacimiento}" title="#{bundle.EditUsuariosTitle_fechaNacimiento}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.EditUsuariosLabel_login}" for="login" />
                         <p:inputText id="login" disabled="true" value="#{usuariosController.selected.login}" title="#{bundle.EditUsuariosTitle_login}" required="true" requiredMessage="#{bundle.EditUsuariosRequiredMessage_login}"/>
-                        <p:outputLabel value="#{bundle.EditUsuariosLabel_password}" for="password" />
-                        <p:inputText id="password" value="#{usuariosController.selected.password}" title="#{bundle.EditUsuariosTitle_password}" required="true" requiredMessage="#{bundle.EditUsuariosRequiredMessage_password}"/>
+                        <h:outputLabel for="password" value="#{bundle.EditUsuariosLabel_password}" />
+                        <p:password id="password" value="#{usuariosController.selected.password}" match="password1" label="#{bundle.EditUsuariosLabel_password}" required="true" feedback="true" 
+                                    promptLabel="#{bundle.Prompt}" weakLabel="#{bundle.Weak}" goodLabel="#{bundle.Good}" strongLabel="#{bundle.Strong}">
+                            <f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})" />        
+                            <f:validateLength minimum="8"/>
+                        </p:password>
+                        <h:outputLabel for="password1" value="#{bundle.EditUsuariosLabel_password1}" />
+                        <p:password id="password1" value="#{usuariosController.selected.password}" label="#{bundle.EditUsuariosLabel_password1}" required="true" />                        
                         <p:outputLabel value="#{bundle.EditUsuariosLabel_foto}" for="foto" />
                         <p:inputTextarea rows="4" cols="30" id="foto" value="#{usuariosController.selected.foto}" title="#{bundle.EditUsuariosTitle_foto}" />
                         <p:outputLabel value="#{bundle.EditUsuariosLabel_estado}" for="estado" />
