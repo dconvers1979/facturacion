@@ -8,10 +8,8 @@ package com.firefly.product.facturacion.negocio.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author dclav
  */
 @Entity
-@Table(name = "sucursales", catalog = "facturacion", schema = "")
+@Table(name = "sucursales")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Sucursales.findAll", query = "SELECT s FROM Sucursales s"),
@@ -45,8 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Sucursales.findByCiudad", query = "SELECT s FROM Sucursales s WHERE s.ciudad = :ciudad"),
     @NamedQuery(name = "Sucursales.findByManejaInventario", query = "SELECT s FROM Sucursales s WHERE s.manejaInventario = :manejaInventario"),
     @NamedQuery(name = "Sucursales.findByManejaServicios", query = "SELECT s FROM Sucursales s WHERE s.manejaServicios = :manejaServicios"),
-    @NamedQuery(name = "Sucursales.findByHabilitadaFacturar", query = "SELECT s FROM Sucursales s WHERE s.habilitadaFacturar = :habilitadaFacturar"),
-    @NamedQuery(name = "Sucursales.findByTipoSucursal", query = "SELECT s FROM Sucursales s WHERE s.tipoSucursal = :tipoSucursal")})
+    @NamedQuery(name = "Sucursales.findByHabilitadaFacturar", query = "SELECT s FROM Sucursales s WHERE s.habilitadaFacturar = :habilitadaFacturar")})
 public class Sucursales implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -95,23 +92,11 @@ public class Sucursales implements Serializable {
     private Boolean manejaServicios;
     @Column(name = "habilitadaFacturar")
     private Boolean habilitadaFacturar;
-    @Column(name = "tipoSucursal")
-    private Integer tipoSucursal;
-    @OneToMany(mappedBy = "idSucursal", fetch = FetchType.EAGER)
-    private Collection<Sucursalesempresas> sucursalesempresasCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idsucursales", fetch = FetchType.EAGER)
-    private Collection<Sucursalesservicios> sucursalesserviciosCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSucursal", fetch = FetchType.EAGER)
-    private Collection<Diaslaborales> diaslaboralesCollection;
-    @OneToMany(mappedBy = "idSucursalMatriz", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "idSucursalMatriz")
     private Collection<Sucursales> sucursalesCollection;
     @JoinColumn(name = "idSucursalMatriz", referencedColumnName = "idsucursal")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Sucursales idSucursalMatriz;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idsucursal", fetch = FetchType.EAGER)
-    private Collection<Factura> facturaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idsucursales", fetch = FetchType.EAGER)
-    private Collection<Usuariossucursal> usuariossucursalCollection;
 
     public Sucursales() {
     }
@@ -219,41 +204,6 @@ public class Sucursales implements Serializable {
         this.habilitadaFacturar = habilitadaFacturar;
     }
 
-    public Integer getTipoSucursal() {
-        return tipoSucursal;
-    }
-
-    public void setTipoSucursal(Integer tipoSucursal) {
-        this.tipoSucursal = tipoSucursal;
-    }
-
-    @XmlTransient
-    public Collection<Sucursalesempresas> getSucursalesempresasCollection() {
-        return sucursalesempresasCollection;
-    }
-
-    public void setSucursalesempresasCollection(Collection<Sucursalesempresas> sucursalesempresasCollection) {
-        this.sucursalesempresasCollection = sucursalesempresasCollection;
-    }
-
-    @XmlTransient
-    public Collection<Sucursalesservicios> getSucursalesserviciosCollection() {
-        return sucursalesserviciosCollection;
-    }
-
-    public void setSucursalesserviciosCollection(Collection<Sucursalesservicios> sucursalesserviciosCollection) {
-        this.sucursalesserviciosCollection = sucursalesserviciosCollection;
-    }
-
-    @XmlTransient
-    public Collection<Diaslaborales> getDiaslaboralesCollection() {
-        return diaslaboralesCollection;
-    }
-
-    public void setDiaslaboralesCollection(Collection<Diaslaborales> diaslaboralesCollection) {
-        this.diaslaboralesCollection = diaslaboralesCollection;
-    }
-
     @XmlTransient
     public Collection<Sucursales> getSucursalesCollection() {
         return sucursalesCollection;
@@ -269,24 +219,6 @@ public class Sucursales implements Serializable {
 
     public void setIdSucursalMatriz(Sucursales idSucursalMatriz) {
         this.idSucursalMatriz = idSucursalMatriz;
-    }
-
-    @XmlTransient
-    public Collection<Factura> getFacturaCollection() {
-        return facturaCollection;
-    }
-
-    public void setFacturaCollection(Collection<Factura> facturaCollection) {
-        this.facturaCollection = facturaCollection;
-    }
-
-    @XmlTransient
-    public Collection<Usuariossucursal> getUsuariossucursalCollection() {
-        return usuariossucursalCollection;
-    }
-
-    public void setUsuariossucursalCollection(Collection<Usuariossucursal> usuariossucursalCollection) {
-        this.usuariossucursalCollection = usuariossucursalCollection;
     }
 
     @Override
@@ -311,7 +243,7 @@ public class Sucursales implements Serializable {
 
     @Override
     public String toString() {
-        return "com.firefly.product.facturacion.negocio.Sucursales[ idsucursal=" + idsucursal + " ]";
+        return "com.firefly.product.facturacion.negocio.entities.Sucursales[ idsucursal=" + idsucursal + " ]";
     }
     
 }
