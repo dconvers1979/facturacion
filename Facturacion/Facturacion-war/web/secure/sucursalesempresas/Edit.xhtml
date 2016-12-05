@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SucursalesempresasEditDlg" widgetVar="SucursalesempresasEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditSucursalesempresasTitle}">
+            <h:form id="SucursalesempresasEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sucursalesempresasController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditSucursalesempresasLabel_idEmpresa}" for="idEmpresa" />
+                        <p:selectOneMenu id="idEmpresa" value="#{sucursalesempresasController.selected.idEmpresa}" >
+                            <f:selectItems value="#{empresasController.itemsAvailableSelectOne}"
+                                           var="idEmpresaItem"
+                                           itemValue="#{idEmpresaItem}"
+                                           itemLabel="#{idEmpresaItem.razonSocial}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditSucursalesempresasLabel_idSucursal}" for="idSucursal" />
+                        <p:selectOneMenu id="idSucursal" value="#{sucursalesempresasController.selected.idSucursal}" >
+                            <f:selectItems value="#{sucursalesController.itemsAvailableSelectOne}"
+                                           var="idSucursalItem"
+                                           itemValue="#{idSucursalItem}"
+                                           itemLabel="#{idSucursalItem.nombre}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sucursalesempresasController.update}" value="#{bundle.Save}" update="display,:SucursalesempresasListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SucursalesempresasEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SucursalesempresasEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

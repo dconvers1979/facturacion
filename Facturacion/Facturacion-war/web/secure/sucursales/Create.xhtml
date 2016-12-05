@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SucursalesCreateDlg" widgetVar="SucursalesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSucursalesTitle}">
+            <h:form id="SucursalesCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sucursalesController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateSucursalesLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{sucursalesController.selected.nombre}" title="#{bundle.CreateSucursalesTitle_nombre}" required="true" requiredMessage="#{bundle.CreateSucursalesRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundle.CreateSucursalesLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{sucursalesController.selected.direccion}" title="#{bundle.CreateSucursalesTitle_direccion}" required="true" requiredMessage="#{bundle.CreateSucursalesRequiredMessage_direccion}"/>
+                        <p:outputLabel value="#{bundle.CreateSucursalesLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{sucursalesController.selected.telefono}" title="#{bundle.CreateSucursalesTitle_telefono}" required="true" requiredMessage="#{bundle.CreateSucursalesRequiredMessage_telefono}"/>
+                        <p:outputLabel value="#{bundle.CreateSucursalesLabel_pais}" for="pais" />
+                        <p:selectOneMenu id="pais" value="#{sucursalesController.selected.pais}" required="true" 
+                                         filter="true" filterMatchMode="startsWith" requiredMessage="#{bundle.CreateSucursalesRequiredMessage_pais}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{localeUtil.countryList}"
+                                           var="country"
+                                           itemValue="#{country.code}"
+                                           itemLabel="#{country.name}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateSucursalesLabel_departamento}" for="departamento" />
+                        <p:inputText id="departamento" value="#{sucursalesController.selected.departamento}" title="#{bundle.CreateSucursalesTitle_departamento}" required="true" requiredMessage="#{bundle.CreateSucursalesRequiredMessage_departamento}"/>
+                        <p:outputLabel value="#{bundle.CreateSucursalesLabel_ciudad}" for="ciudad" />
+                        <p:inputText id="ciudad" value="#{sucursalesController.selected.ciudad}" title="#{bundle.CreateSucursalesTitle_ciudad}" required="true" requiredMessage="#{bundle.CreateSucursalesRequiredMessage_ciudad}"/>
+                        <p:outputLabel value="#{bundle.CreateSucursalesLabel_manejaInventario}" for="manejaInventario" />
+                        <p:selectBooleanCheckbox id="manejaInventario" value="#{sucursalesController.selected.manejaInventario}" />
+                        <p:outputLabel value="#{bundle.CreateSucursalesLabel_manejaServicios}" for="manejaServicios" />
+                        <p:selectBooleanCheckbox id="manejaServicios" value="#{sucursalesController.selected.manejaServicios}" />
+                        <p:outputLabel value="#{bundle.CreateSucursalesLabel_habilitadaFacturar}" for="habilitadaFacturar" />
+                        <p:selectBooleanCheckbox id="habilitadaFacturar" value="#{sucursalesController.selected.habilitadaFacturar}" />
+                        <p:outputLabel value="#{bundle.CreateSucursalesLabel_idSucursalMatriz}" for="idSucursalMatriz" />
+                        <p:selectOneMenu id="idSucursalMatriz" value="#{sucursalesController.selected.idSucursalMatriz}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{sucursalesController.itemsAvailableSelectOne}"
+                                           var="idSucursalMatrizItem"
+                                           itemLabel="#{idSucursalMatrizItem.nombre}"
+                                           itemValue="#{idSucursalMatrizItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateSucursalesLabel_estado}" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{sucursalesController.selected.estado}" 
+                                         required="true" requiredMessage="#{bundle.CreateSucursalesRequiredMessage_estado}">
+                            <f:selectItem itemLabel="#{bundle.Active}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.Inactive}" itemValue="2"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sucursalesController.create}" value="#{bundle.Save}" update="display,:SucursalesListForm:datalist,:growl" oncomplete="handleSubmit(args,'SucursalesCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SucursalesCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

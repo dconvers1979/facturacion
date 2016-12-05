@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SucursalesViewDlg" widgetVar="SucursalesViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewSucursalesTitle}">
+            <h:form id="SucursalesViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sucursalesController.selected != null}">
+                        <h:outputText value="#{bundle.ViewSucursalesLabel_nombre}"/>
+                        <h:outputText value="#{sucursalesController.selected.nombre}" title="#{bundle.ViewSucursalesTitle_nombre}"/>
+                        <h:outputText value="#{bundle.ViewSucursalesLabel_direccion}"/>
+                        <h:outputText value="#{sucursalesController.selected.direccion}" title="#{bundle.ViewSucursalesTitle_direccion}"/>
+                        <h:outputText value="#{bundle.ViewSucursalesLabel_telefono}"/>
+                        <h:outputText value="#{sucursalesController.selected.telefono}" title="#{bundle.ViewSucursalesTitle_telefono}"/>
+                        <h:outputText value="#{bundle.ViewSucursalesLabel_pais}"/>
+                        <p:selectOneMenu id="pais" value="#{sucursalesController.selected.pais}" disabled="true">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{localeUtil.countryList}"
+                                           var="country"
+                                           itemValue="#{country.code}"
+                                           itemLabel="#{country.code}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="#{bundle.ViewSucursalesLabel_departamento}"/>
+                        <h:outputText value="#{sucursalesController.selected.departamento}" title="#{bundle.ViewSucursalesTitle_departamento}"/>
+                        <h:outputText value="#{bundle.ViewSucursalesLabel_ciudad}"/>
+                        <h:outputText value="#{sucursalesController.selected.ciudad}" title="#{bundle.ViewSucursalesTitle_ciudad}"/>
+                        <h:outputText value="#{bundle.ViewSucursalesLabel_manejaInventario}"/>
+                        <p:selectBooleanCheckbox value="#{sucursalesController.selected.manejaInventario}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewSucursalesLabel_manejaServicios}"/>
+                        <p:selectBooleanCheckbox value="#{sucursalesController.selected.manejaServicios}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewSucursalesLabel_habilitadaFacturar}"/>
+                        <p:selectBooleanCheckbox value="#{sucursalesController.selected.habilitadaFacturar}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewSucursalesLabel_idSucursalMatriz}"/>
+                        <h:outputText value="#{sucursalesController.selected.idSucursalMatriz.nombre}" title="#{bundle.ViewSucursalesTitle_idSucursalMatriz}"/>
+                        <h:outputText value="#{bundle.ViewSucursalesLabel_estado}"/>
+                        <p:selectOneMenu id="estado" value="#{sucursalesController.selected.estado}" disabled="true">
+                            <f:selectItem itemLabel="#{bundle.Active}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.Inactive}" itemValue="2"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="SucursalesViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
