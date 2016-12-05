@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpresasEditDlg" widgetVar="EmpresasEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditEmpresasTitle}">
+            <h:form id="EmpresasEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{empresasController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditEmpresasLabel_razonSocial}" for="razonSocial" />
+                        <p:inputText disabled="true" id="razonSocial" value="#{empresasController.selected.razonSocial}" title="#{bundle.EditEmpresasTitle_razonSocial}" required="true" requiredMessage="#{bundle.EditEmpresasRequiredMessage_razonSocial}"/>
+                        <p:outputLabel value="#{bundle.EditEmpresasLabel_nit}" for="nit" />
+                        <p:inputText disabled="true" id="nit" value="#{empresasController.selected.nit}" title="#{bundle.EditEmpresasTitle_nit}" required="true" requiredMessage="#{bundle.EditEmpresasRequiredMessage_nit}"/>
+                        <p:outputLabel value="#{bundle.EditEmpresasLabel_actividadEconomica1}" for="actividadEconomica1" />
+                        <p:inputText id="actividadEconomica1" value="#{empresasController.selected.actividadEconomica1}" title="#{bundle.EditEmpresasTitle_actividadEconomica1}" required="true" requiredMessage="#{bundle.EditEmpresasRequiredMessage_actividadEconomica1}"/>
+                        <p:outputLabel value="#{bundle.EditEmpresasLabel_actividadEconomica2}" for="actividadEconomica2" />
+                        <p:inputText id="actividadEconomica2" value="#{empresasController.selected.actividadEconomica2}" title="#{bundle.EditEmpresasTitle_actividadEconomica2}" />
+                        <p:outputLabel value="#{bundle.EditEmpresasLabel_actividadEconomica3}" for="actividadEconomica3" />
+                        <p:inputText id="actividadEconomica3" value="#{empresasController.selected.actividadEconomica3}" title="#{bundle.EditEmpresasTitle_actividadEconomica3}" />
+                        <p:outputLabel value="#{bundle.EditEmpresasLabel_actividadEconomica4}" for="actividadEconomica4" />
+                        <p:inputText id="actividadEconomica4" value="#{empresasController.selected.actividadEconomica4}" title="#{bundle.EditEmpresasTitle_actividadEconomica4}" />
+                        <p:outputLabel value="#{bundle.EditEmpresasLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{empresasController.selected.direccion}" title="#{bundle.EditEmpresasTitle_direccion}" required="true" requiredMessage="#{bundle.EditEmpresasRequiredMessage_direccion}"/>
+                        <p:outputLabel value="#{bundle.EditEmpresasLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{empresasController.selected.telefono}" title="#{bundle.EditEmpresasTitle_telefono}" required="true" requiredMessage="#{bundle.EditEmpresasRequiredMessage_telefono}"/>
+                        <p:outputLabel value="#{bundle.EditEmpresasLabel_pais}" for="pais" />
+                        <p:selectOneMenu id="pais" value="#{empresasController.selected.pais}" required="true" 
+                                         filter="true" filterMatchMode="startsWith" requiredMessage="#{bundle.EditEmpresasRequiredMessage_pais}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{localeUtil.countryList}"
+                                           var="country"
+                                           itemValue="#{country.code}"
+                                           itemLabel="#{country.code}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditEmpresasLabel_departamento}" for="departamento" />
+                        <p:inputText id="departamento" value="#{empresasController.selected.departamento}" title="#{bundle.EditEmpresasTitle_departamento}" required="true" requiredMessage="#{bundle.EditEmpresasRequiredMessage_departamento}"/>
+                        <p:outputLabel value="#{bundle.EditEmpresasLabel_ciudad}" for="ciudad" />
+                        <p:inputText id="ciudad" value="#{empresasController.selected.ciudad}" title="#{bundle.EditEmpresasTitle_ciudad}" required="true" requiredMessage="#{bundle.EditEmpresasRequiredMessage_ciudad}"/>
+                        <p:outputLabel value="#{bundle.EditEmpresasLabel_estado}" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{empresasController.selected.estado}" 
+                                     required="true" requiredMessage="#{bundle.EditEmpresasRequiredMessage_estado}">
+                            <f:selectItem itemLabel="#{bundle.Active}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.Inactive}" itemValue="2"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{empresasController.update}" value="#{bundle.Save}" update="display,:EmpresasListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EmpresasEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EmpresasEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

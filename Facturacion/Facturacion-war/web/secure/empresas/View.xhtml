@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpresasViewDlg" widgetVar="EmpresasViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewEmpresasTitle}">
+            <h:form id="EmpresasViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{empresasController.selected != null}">
+                        <h:outputText value="#{bundle.ViewEmpresasLabel_estado}"/>
+                        <p:selectOneMenu id="estado" value="#{empresasController.selected.estado}" >
+                            <f:selectItem itemLabel="#{bundle.Active}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.Inactive}" itemValue="2"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="#{bundle.ViewEmpresasLabel_razonSocial}"/>
+                        <h:outputText value="#{empresasController.selected.razonSocial}" title="#{bundle.ViewEmpresasTitle_razonSocial}"/>
+                        <h:outputText value="#{bundle.ViewEmpresasLabel_nit}"/>
+                        <h:outputText value="#{empresasController.selected.nit}" title="#{bundle.ViewEmpresasTitle_nit}"/>
+                        <h:outputText value="#{bundle.ViewEmpresasLabel_actividadEconomica1}"/>
+                        <h:outputText value="#{empresasController.selected.actividadEconomica1}" title="#{bundle.ViewEmpresasTitle_actividadEconomica1}"/>
+                        <h:outputText value="#{bundle.ViewEmpresasLabel_actividadEconomica2}"/>
+                        <h:outputText value="#{empresasController.selected.actividadEconomica2}" title="#{bundle.ViewEmpresasTitle_actividadEconomica2}"/>
+                        <h:outputText value="#{bundle.ViewEmpresasLabel_actividadEconomica3}"/>
+                        <h:outputText value="#{empresasController.selected.actividadEconomica3}" title="#{bundle.ViewEmpresasTitle_actividadEconomica3}"/>
+                        <h:outputText value="#{bundle.ViewEmpresasLabel_actividadEconomica4}"/>
+                        <h:outputText value="#{empresasController.selected.actividadEconomica4}" title="#{bundle.ViewEmpresasTitle_actividadEconomica4}"/>
+                        <h:outputText value="#{bundle.ViewEmpresasLabel_direccion}"/>
+                        <h:outputText value="#{empresasController.selected.direccion}" title="#{bundle.ViewEmpresasTitle_direccion}"/>
+                        <h:outputText value="#{bundle.ViewEmpresasLabel_telefono}"/>
+                        <h:outputText value="#{empresasController.selected.telefono}" title="#{bundle.ViewEmpresasTitle_telefono}"/>
+                        <h:outputText value="#{bundle.ViewEmpresasLabel_pais}"/>
+                        <p:selectOneMenu id="pais" value="#{empresasController.selected.pais}" disabled="true">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{localeUtil.countryList}"
+                                           var="country"
+                                           itemValue="#{country.code}"
+                                           itemLabel="#{country.code}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="#{bundle.ViewEmpresasLabel_departamento}"/>
+                        <h:outputText value="#{empresasController.selected.departamento}" title="#{bundle.ViewEmpresasTitle_departamento}"/>
+                        <h:outputText value="#{bundle.ViewEmpresasLabel_ciudad}"/>
+                        <h:outputText value="#{empresasController.selected.ciudad}" title="#{bundle.ViewEmpresasTitle_ciudad}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="EmpresasViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
