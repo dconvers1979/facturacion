@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DiaslaboralesViewDlg" widgetVar="DiaslaboralesViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDiaslaboralesTitle}">
+            <h:form id="DiaslaboralesViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{diaslaboralesController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDiaslaboralesLabel_diaSemana}"/>
+                        <p:selectOneMenu id="diaSemana" value="#{diaslaboralesController.selected.diaSemana}" disabled="true"  >
+                               <f:selectItem itemLabel="#{bundle.Sunday}" itemValue="0"/>
+                               <f:selectItem itemLabel="#{bundle.Monday}" itemValue="1"/>
+                               <f:selectItem itemLabel="#{bundle.Tuesday}" itemValue="2"/>
+                               <f:selectItem itemLabel="#{bundle.Wednesday}" itemValue="3"/>
+                               <f:selectItem itemLabel="#{bundle.Thursday}" itemValue="4"/>
+                               <f:selectItem itemLabel="#{bundle.Friday}" itemValue="5"/>
+                               <f:selectItem itemLabel="#{bundle.Saturday}" itemValue="6"/>
+                           </p:selectOneMenu>
+                        <h:outputText value="#{bundle.ViewDiaslaboralesLabel_horaApertura}"/>
+                        <h:outputText value="#{diaslaboralesController.selected.horaApertura}" title="#{bundle.ViewDiaslaboralesTitle_horaApertura}">
+                            <f:convertDateTime pattern="HH:mm" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDiaslaboralesLabel_horaCierre}"/>
+                        <h:outputText value="#{diaslaboralesController.selected.horaCierre}" title="#{bundle.ViewDiaslaboralesTitle_horaCierre}">
+                            <f:convertDateTime pattern="HH:mm" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDiaslaboralesLabel_horaAlmuerzoApertura}"/>
+                        <h:outputText value="#{diaslaboralesController.selected.horaAlmuerzoApertura}" title="#{bundle.ViewDiaslaboralesTitle_horaAlmuerzoApertura}">
+                            <f:convertDateTime pattern="HH:mm" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDiaslaboralesLabel_horaAlmuerzoCierre}"/>
+                        <h:outputText value="#{diaslaboralesController.selected.horaAlmuerzoCierre}" title="#{bundle.ViewDiaslaboralesTitle_horaAlmuerzoCierre}">
+                            <f:convertDateTime pattern="HH:mm" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewDiaslaboralesLabel_idSucursal}"/>
+                        <h:outputText value="#{diaslaboralesController.selected.idSucursal.nombre}" title="#{bundle.ViewDiaslaboralesTitle_idSucursal}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DiaslaboralesViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

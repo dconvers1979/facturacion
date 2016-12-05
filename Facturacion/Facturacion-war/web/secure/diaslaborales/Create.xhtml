@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DiaslaboralesCreateDlg" widgetVar="DiaslaboralesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDiaslaboralesTitle}">
+            <h:form id="DiaslaboralesCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{diaslaboralesController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateDiaslaboralesLabel_diaSemana}" for="diaSemana" />
+                        <p:selectOneMenu id="diaSemana" value="#{diaslaboralesController.selected.diaSemana}" required="true" 
+                                         filter="true" filterMatchMode="startsWith" requiredMessage="#{bundle.CreateDiaslaboralesRequiredMessage_diaSemana}" >
+                            <f:selectItem itemLabel="#{bundle.Sunday}" itemValue="0"/>
+                            <f:selectItem itemLabel="#{bundle.Monday}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.Tuesday}" itemValue="2"/>
+                            <f:selectItem itemLabel="#{bundle.Wednesday}" itemValue="3"/>
+                            <f:selectItem itemLabel="#{bundle.Thursday}" itemValue="4"/>
+                            <f:selectItem itemLabel="#{bundle.Friday}" itemValue="5"/>
+                            <f:selectItem itemLabel="#{bundle.Saturday}" itemValue="6"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateDiaslaboralesLabel_horaApertura}" for="horaApertura" />
+                        <p:calendar pattern="HH:mm" timeOnly="true" id="horaApertura" value="#{diaslaboralesController.selected.horaApertura}" title="#{bundle.EditDiaslaboralesTitle_horaApertura}" required="true" requiredMessage="#{bundle.EditDiaslaboralesRequiredMessage_horaApertura}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateDiaslaboralesLabel_horaCierre}" for="horaCierre" />
+                        <p:calendar pattern="HH:mm" timeOnly="true" id="horaCierre" value="#{diaslaboralesController.selected.horaCierre}" title="#{bundle.EditDiaslaboralesTitle_horaCierre}" required="true" requiredMessage="#{bundle.EditDiaslaboralesRequiredMessage_horaCierre}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateDiaslaboralesLabel_horaAlmuerzoApertura}" for="horaAlmuerzoApertura" />
+                        <p:calendar pattern="HH:mm" timeOnly="true" id="horaAlmuerzoApertura" value="#{diaslaboralesController.selected.horaAlmuerzoApertura}" title="#{bundle.EditDiaslaboralesTitle_horaAlmuerzoApertura}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateDiaslaboralesLabel_horaAlmuerzoCierre}" for="horaAlmuerzoCierre" />
+                        <p:calendar pattern="HH:mm" timeOnly="true" id="horaAlmuerzoCierre" value="#{diaslaboralesController.selected.horaAlmuerzoCierre}" title="#{bundle.EditDiaslaboralesTitle_horaAlmuerzoCierre}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateDiaslaboralesLabel_idSucursal}" for="idSucursal" />
+                        <p:selectOneMenu id="idSucursal" value="#{diaslaboralesController.selected.idSucursal}" required="true" requiredMessage="#{bundle.EditDiaslaboralesRequiredMessage_idSucursal}">
+                            <f:selectItems value="#{sucursalesController.itemsAvailableSelectOne}"
+                                           var="idSucursalItem"
+                                           itemValue="#{idSucursalItem}"
+                                           itemLabel="#{idSucursalItem.nombre}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{diaslaboralesController.create}" value="#{bundle.Save}" update="display,:DiaslaboralesListForm:datalist,:growl" oncomplete="handleSubmit(args,'DiaslaboralesCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DiaslaboralesCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

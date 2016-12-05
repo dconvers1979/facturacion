@@ -32,13 +32,19 @@
                             <p:menuitem value="Impuesto" outcome="/secure/impuesto/List.xhtml" />
                             <p:menuitem value="Tipo servicios" outcome="/secure/tiposervicio/List.xhtml" />
                             <p:menuitem value="Tipo sucursales" outcome="/secure/tiposucursal/List.xhtml" />
+                            <p:menuitem value="Dias Laborales" outcome="/secure/diaslaborales/List.xhtml" />
                         </p:submenu>
                         <p:submenu label="#{bundle.Users}">
                             <p:menuitem value="Usuarios" outcome="/secure/usuarios/List.xhtml" />
                             <p:menuitem value="Roles" outcome="/secure/roles/List.xhtml" />
                             <p:menuitem value="Roles de usuarios" outcome="/secure/usuariosroles/List.xhtml" />
                         </p:submenu>
-                        
+                        <p:submenu label="#{bundle.Empresas}">
+                            <p:menuitem value="Empresas" outcome="/secure/empresas/List.xhtml" />
+                            <p:separator />
+                            <p:menuitem value="Sucursales" outcome="/secure/sucursales/List.xhtml" />
+                            <p:menuitem value="Sucursales por empresa" outcome="/secure/sucursalesempresas/List.xhtml" />
+                        </p:submenu>
                     </p:menubar>
                 </h:form>
             </p:layoutUnit>
