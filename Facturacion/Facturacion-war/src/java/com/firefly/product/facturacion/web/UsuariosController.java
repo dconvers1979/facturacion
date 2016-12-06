@@ -96,7 +96,7 @@ public class UsuariosController implements Serializable {
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
-                    if (persistAction == PersistAction.CREATE) {
+                    if (persistAction == PersistAction.CREATE || persistAction == PersistAction.UPDATE) {
                         
                         byte fileContent[] = new byte[(int)this.file.getSize()];
 
@@ -104,9 +104,12 @@ public class UsuariosController implements Serializable {
 
                         selected.setFoto(fileContent);
 
-                        selected.setFechaCreacion(new Date());
                         selected.setPassword(EncryptionHelper.encrypt(selected.getPassword()));
-                    }
+                        
+                        if (persistAction == PersistAction.CREATE) {
+                            selected.setFechaCreacion(new Date());
+                        }
+                    } 
 
                     getFacade().edit(selected);
                 } else {

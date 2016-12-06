@@ -9,7 +9,7 @@
     <ui:composition>
 
         <p:dialog id="UsuariosEditDlg" widgetVar="UsuariosEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditUsuariosTitle}">
-            <h:form id="UsuariosEditForm">
+            <h:form id="UsuariosEditForm" enctype="multipart/form-data">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{usuariosController.selected != null}">
                         <p:outputLabel value="#{bundle.EditUsuariosLabel_primerNombre}" for="primerNombre" />
@@ -39,7 +39,7 @@
                         <h:outputLabel for="password1" value="#{bundle.EditUsuariosLabel_password1}" />
                         <p:password id="password1" value="#{usuariosController.selected.password}" label="#{bundle.EditUsuariosLabel_password1}" required="true" />                        
                         <p:outputLabel value="#{bundle.EditUsuariosLabel_foto}" for="foto" />
-                        <p:inputTextarea rows="4" cols="30" id="foto" value="#{usuariosController.selected.foto}" title="#{bundle.EditUsuariosTitle_foto}" />
+                        <p:fileUpload id="foto" value="#{usuariosController.file}" mode="simple" /> 
                         <p:outputLabel value="#{bundle.EditUsuariosLabel_estado}" for="estado" />
                         <p:selectOneMenu id="estado" value="#{usuariosController.selected.estado}" 
                                      required="true" requiredMessage="#{bundle.EditUsuariosRequiredMessage_estado}">
@@ -55,7 +55,7 @@
                                            itemValue="#{idcargoItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{usuariosController.update}" value="#{bundle.Save}" update="display,:UsuariosListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsuariosEditDialog');"/>
+                    <p:commandButton ajax="false" actionListener="#{usuariosController.update}" value="#{bundle.Save}" update="display,:UsuariosListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsuariosEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="UsuariosEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

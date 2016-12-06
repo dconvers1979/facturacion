@@ -35,7 +35,7 @@
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
                         <h:outputText value="#{bundle.ViewUsuariosLabel_foto}"/>
-                        <h:outputText value="#{usuariosController.selected.foto}" title="#{bundle.ViewUsuariosTitle_foto}"/>
+                        <p:graphicImage value="#{usuariosController.image}" width="50" height="50"/>
                         <h:outputText value="#{bundle.ViewUsuariosLabel_estado}"/>
                         <p:selectOneMenu id="estado" value="#{usuariosController.selected.estado}" 
                                      disabled="true" >

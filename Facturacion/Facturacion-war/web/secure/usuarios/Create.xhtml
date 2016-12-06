@@ -9,7 +9,7 @@
     <ui:composition>
 
         <p:dialog id="UsuariosCreateDlg" widgetVar="UsuariosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateUsuariosTitle}">
-            <h:form id="UsuariosCreateForm">
+                <h:form id="UsuariosCreateForm" enctype="multipart/form-data">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{usuariosController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateUsuariosLabel_primerNombre}" for="primerNombre" />
@@ -39,7 +39,7 @@
                         <h:outputLabel for="password1" value="#{bundle.CreateUsuariosTitle_password1}" />
                         <p:password id="password1" value="#{usuariosController.selected.password}" label="#{bundle.CreateUsuariosLabel_password1}" required="true" />                        
                         <p:outputLabel value="#{bundle.CreateUsuariosLabel_foto}" for="foto" />
-                        <p:inputTextarea rows="4" cols="30" id="foto" value="#{usuariosController.selected.foto}" title="#{bundle.CreateUsuariosTitle_foto}" />
+                        <p:fileUpload id="foto" value="#{usuariosController.file}" mode="simple" />                       
                         <p:outputLabel value="#{bundle.CreateUsuariosLabel_estado}" for="estado" />
                         <p:selectOneMenu id="estado" value="#{usuariosController.selected.estado}" 
                                      required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_estado}">
@@ -55,7 +55,7 @@
                                            itemLabel="#{idcargoItem.idcargos} - #{idcargoItem.nombre}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{usuariosController.create}" value="#{bundle.Save}" update="display,:UsuariosListForm:datalist,:growl" oncomplete="handleSubmit(args,'UsuariosCreateDialog');"/>
+                    <p:commandButton ajax="false" actionListener="#{usuariosController.create}" value="#{bundle.Save}" update="display,:UsuariosListForm:datalist,:growl" oncomplete="handleSubmit(args,'UsuariosCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="UsuariosCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
