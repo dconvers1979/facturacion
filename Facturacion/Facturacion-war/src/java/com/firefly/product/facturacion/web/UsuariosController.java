@@ -5,6 +5,8 @@ import com.firefly.product.facturacion.negocio.session.UsuariosFacade;
 import com.firefly.product.facturacion.web.util.EncryptionHelper;
 import com.firefly.product.facturacion.web.util.JsfUtil;
 import com.firefly.product.facturacion.web.util.JsfUtil.PersistAction;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,6 +22,11 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.PhaseId;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
+import sun.misc.IOUtils;
 
 @Named("usuariosController")
 @SessionScoped
@@ -29,6 +36,7 @@ public class UsuariosController implements Serializable {
     private UsuariosFacade ejbFacade;
     private List<Usuarios> items = null;
     private Usuarios selected;
+    private UploadedFile file;
 
     public UsuariosController() {
     }
@@ -88,11 +96,18 @@ public class UsuariosController implements Serializable {
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
-                    if(persistAction== PersistAction.CREATE){
+                    if (persistAction == PersistAction.CREATE) {
+                        
+                        byte fileContent[] = new byte[(int)this.file.getSize()];
+
+                        this.file.getInputstream().read(fileContent);
+
+                        selected.setFoto(fileContent);
+
                         selected.setFechaCreacion(new Date());
-                        //selected.setPassword(EncryptionHelper.encrypt(selected.getPassword()));
+                        selected.setPassword(EncryptionHelper.encrypt(selected.getPassword()));
                     }
-                    
+
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
@@ -167,6 +182,38 @@ public class UsuariosController implements Serializable {
             }
         }
 
+    }
+
+    /*public void handleFileUpload(FileUploadEvent event) {
+        selected.setFoto(event.getFile().getContents());
+        
+    }*/
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public StreamedContent getImage() throws IOException {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (this.selected.getFoto() == null) {
+            return null;
+        }
+
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            // So, we're rendering the HTML. Return a stub StreamedContent so that it will generate right URL.
+            return new DefaultStreamedContent();
+        } else {
+
+            // So, browser is requesting the image. Return a real StreamedContent with the image bytes.
+            //String imageId = context.getExternalContext().getRequestParameterMap().get("imageId");
+            //Image image = imageService.find(Long.valueOf(imageId));
+
+            return new DefaultStreamedContent(new ByteArrayInputStream(this.selected.getFoto()), "image/jpg", "test.jpg");
+        }
     }
 
 }
