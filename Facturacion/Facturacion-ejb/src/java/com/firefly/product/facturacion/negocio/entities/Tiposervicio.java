@@ -6,7 +6,9 @@
 package com.firefly.product.facturacion.negocio.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,17 +16,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author dclav
  */
 @Entity
-@Table(name = "tiposervicio", catalog = "facturacion", schema = "")
+@Table(name = "tiposervicio")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Tiposervicio.findAll", query = "SELECT t FROM Tiposervicio t"),
@@ -43,6 +47,8 @@ public class Tiposervicio implements Serializable {
     @Size(min = 1, max = 70)
     @Column(name = "nombre")
     private String nombre;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoServicio")
+    private Collection<Servicios> serviciosCollection;
 
     public Tiposervicio() {
     }
@@ -72,6 +78,15 @@ public class Tiposervicio implements Serializable {
         this.nombre = nombre;
     }
 
+    @XmlTransient
+    public Collection<Servicios> getServiciosCollection() {
+        return serviciosCollection;
+    }
+
+    public void setServiciosCollection(Collection<Servicios> serviciosCollection) {
+        this.serviciosCollection = serviciosCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -94,7 +109,7 @@ public class Tiposervicio implements Serializable {
 
     @Override
     public String toString() {
-        return "com.firefly.product.facturacion.negocio.Tiposervicio[ idtipoServicio=" + idtipoServicio + " ]";
+        return "com.firefly.product.facturacion.negocio.entities.Tiposervicio[ idtipoServicio=" + idtipoServicio + " ]";
     }
     
 }

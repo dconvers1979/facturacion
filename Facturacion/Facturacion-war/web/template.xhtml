@@ -45,6 +45,13 @@
                             <p:menuitem value="Sucursales" outcome="/secure/sucursales/List.xhtml" />
                             <p:menuitem value="Sucursales por empresa" outcome="/secure/sucursalesempresas/List.xhtml" />
                         </p:submenu>
+                        
+                        <p:submenu label="#{bundle.Services}">
+                            <p:menuitem value="Servicios" outcome="/secure/servicios/List.xhtml" />
+                            <p:separator />
+                            <p:menuitem value="Impuestos servicio" outcome="/secure/serviciosimpuestos/List.xhtml" />
+                            <p:menuitem value="Servicios sucursal" outcome="/secure/sucursalesservicios/List.xhtml" />
+                        </p:submenu>
                     </p:menubar>
                 </h:form>
             </p:layoutUnit>
