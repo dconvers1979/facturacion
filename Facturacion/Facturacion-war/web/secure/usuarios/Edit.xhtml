@@ -54,9 +54,25 @@
                                            itemLabel="#{idcargoItem.idcargos} - #{idcargoItem.nombre}"
                                            itemValue="#{idcargoItem}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditUsuariosLabel_autoriza}" for="autoriza" />
+                        <p:selectOneMenu id="autoriza" value="#{usuariosController.selected.autoriza}" 
+                                     required="true" requiredMessage="#{bundle.EditUsuariosRequiredMessage_autoriza}">
+                            <f:selectItem itemLabel="#{bundle.Yes}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.No}" itemValue="0"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditUsuariosLabel_idJefe}" for="idJefe" />
+                        <p:selectOneMenu id="idJefe" value="#{usuariosController.selected.idJefe}" filter="true"
+                                         filterMatchMode="contains"
+                                     required="true" requiredMessage="#{bundle.EditUsuariosRequiredMessage_idJefe}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuariosController.itemsAvailableSelectOne}"
+                                           var="idJefeItem"
+                                           itemValue="#{idJefeItem}"
+                                           itemLabel="#{idJefeItem.primerNombre} #{idJefeItem.primerApellido}"/>
+                        </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton ajax="false" actionListener="#{usuariosController.update}" value="#{bundle.Save}" update="display,:UsuariosListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsuariosEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="UsuariosEditDialog.hide()"/>
+                    <p:commandButton ajax="false" value="#{bundle.Cancel}" onclick="UsuariosEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

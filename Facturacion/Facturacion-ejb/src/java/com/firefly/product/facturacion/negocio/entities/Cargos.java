@@ -10,7 +10,6 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author dclav
  */
 @Entity
-@Table(name = "cargos", catalog = "facturacion", schema = "")
+@Table(name = "cargos")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Cargos.findAll", query = "SELECT c FROM Cargos c"),
@@ -44,7 +43,7 @@ public class Cargos implements Serializable {
     @Size(max = 45)
     @Column(name = "nombre")
     private String nombre;
-    @OneToMany(mappedBy = "idcargo", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "idcargo")
     private Collection<Usuarios> usuariosCollection;
 
     public Cargos() {
@@ -101,7 +100,7 @@ public class Cargos implements Serializable {
 
     @Override
     public String toString() {
-        return "com.firefly.product.facturacion.negocio.Cargos[ idcargos=" + idcargos + " ]";
+        return "com.firefly.product.facturacion.negocio.entities.Cargos[ idcargos=" + idcargos + " ]";
     }
     
 }

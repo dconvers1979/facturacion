@@ -49,7 +49,16 @@
                                            itemLabel="#{idcargoItem.idcargos} - #{idcargoItem.nombre}"
                                            itemValue="#{idcargoItem}"/>
                         </p:selectOneMenu>
-                        <!--h:outputText value="" title="#bundle.ViewUsuariosTitle_idcargo}"/-->
+                        <h:outputText value="#{bundle.ViewUsuariosLabel_estado}"/>
+                        <p:selectOneMenu id="autoriza" value="#{usuariosController.selected.autoriza}" 
+                                     disabled="true" >
+                            <f:selectItem itemLabel="#{bundle.Yes}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.No}" itemValue="0"/>
+                        </p:selectOneMenu>
+                        
+                        <h:outputText value="#{bundle.ViewUsuariosLabel_idJefe}"/>
+                        <h:outputText value="#{usuariosController.selected.idJefe.primerNombre} #{usuariosController.selected.idJefe.primerApellido}" title="#{bundle.ViewUsuariosTitle_idJefe}"/>
+                        
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="UsuariosViewDialog.hide()"/>
                 </h:panelGroup>

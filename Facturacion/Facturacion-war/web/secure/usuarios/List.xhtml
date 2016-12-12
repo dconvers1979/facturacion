@@ -65,32 +65,16 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListUsuariosTitle_fechaNacimiento}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.fechaNacimiento}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListUsuariosTitle_login}"/>
                             </f:facet>
                             <h:outputText value="#{item.login}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListUsuariosTitle_fechaCreacion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.fechaCreacion}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListUsuariosTitle_estado}"/>
                             </f:facet>
                             <p:selectOneMenu id="estado" value="#{item.estado}" 
-                                     disabled="true" >
+                                             disabled="true" >
                                 <f:selectItem itemLabel="#{bundle.Active}" itemValue="1"/>
                                 <f:selectItem itemLabel="#{bundle.Inactive}" itemValue="2"/>
                             </p:selectOneMenu>
@@ -104,6 +88,16 @@
                                                var="idcargoItem"
                                                itemLabel="#{idcargoItem.idcargos} - #{idcargoItem.nombre}"
                                                itemValue="#{idcargoItem}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUsuariosTitle_autoriza}"/>
+                            </f:facet>
+                            <p:selectOneMenu id="autoriza" value="#{item.autoriza}" 
+                                             disabled="true" >
+                                <f:selectItem itemLabel="#{bundle.Yes}" itemValue="1"/>
+                                <f:selectItem itemLabel="#{bundle.No}" itemValue="0"/>
                             </p:selectOneMenu>
                         </p:column>
                         <f:facet name="footer">

@@ -9,10 +9,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author dclav
  */
 @Entity
-@Table(name = "usuarios", catalog = "facturacion", schema = "")
+@Table(name = "usuarios")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
@@ -50,7 +48,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuarios.findByLogin", query = "SELECT u FROM Usuarios u WHERE u.login = :login"),
     @NamedQuery(name = "Usuarios.findByPassword", query = "SELECT u FROM Usuarios u WHERE u.password = :password"),
     @NamedQuery(name = "Usuarios.findByFechaCreacion", query = "SELECT u FROM Usuarios u WHERE u.fechaCreacion = :fechaCreacion"),
-    @NamedQuery(name = "Usuarios.findByEstado", query = "SELECT u FROM Usuarios u WHERE u.estado = :estado")})
+    @NamedQuery(name = "Usuarios.findByEstado", query = "SELECT u FROM Usuarios u WHERE u.estado = :estado"),
+    @NamedQuery(name = "Usuarios.findByAutoriza", query = "SELECT u FROM Usuarios u WHERE u.autoriza = :autoriza")})
 public class Usuarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -89,7 +88,7 @@ public class Usuarios implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "login", unique = true)
+    @Column(name = "login")
     private String login;
     @Basic(optional = false)
     @NotNull
@@ -108,13 +107,16 @@ public class Usuarios implements Serializable {
     @NotNull
     @Column(name = "estado")
     private int estado;
+    @Column(name = "autoriza")
+    private Short autoriza;
+    @OneToMany(mappedBy = "idJefe")
+    private Collection<Usuarios> usuariosCollection;
+    @JoinColumn(name = "idJefe", referencedColumnName = "idusuarios")
+    @ManyToOne
+    private Usuarios idJefe;
     @JoinColumn(name = "idcargo", referencedColumnName = "idcargos")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Cargos idcargo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuarios", fetch = FetchType.EAGER)
-    private Collection<Usuariosroles> usuariosrolesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuarios", fetch = FetchType.EAGER)
-    private Collection<Usuariossucursal> usuariossucursalCollection;
 
     public Usuarios() {
     }
@@ -238,30 +240,37 @@ public class Usuarios implements Serializable {
         this.estado = estado;
     }
 
+    public Short getAutoriza() {
+        return autoriza;
+    }
+
+    public void setAutoriza(Short autoriza) {
+        this.autoriza = autoriza;
+    }
+
+    @XmlTransient
+    public Collection<Usuarios> getUsuariosCollection() {
+        return usuariosCollection;
+    }
+
+    public void setUsuariosCollection(Collection<Usuarios> usuariosCollection) {
+        this.usuariosCollection = usuariosCollection;
+    }
+
+    public Usuarios getIdJefe() {
+        return idJefe;
+    }
+
+    public void setIdJefe(Usuarios idJefe) {
+        this.idJefe = idJefe;
+    }
+
     public Cargos getIdcargo() {
         return idcargo;
     }
 
     public void setIdcargo(Cargos idcargo) {
         this.idcargo = idcargo;
-    }
-
-    @XmlTransient
-    public Collection<Usuariosroles> getUsuariosrolesCollection() {
-        return usuariosrolesCollection;
-    }
-
-    public void setUsuariosrolesCollection(Collection<Usuariosroles> usuariosrolesCollection) {
-        this.usuariosrolesCollection = usuariosrolesCollection;
-    }
-
-    @XmlTransient
-    public Collection<Usuariossucursal> getUsuariossucursalCollection() {
-        return usuariossucursalCollection;
-    }
-
-    public void setUsuariossucursalCollection(Collection<Usuariossucursal> usuariossucursalCollection) {
-        this.usuariossucursalCollection = usuariossucursalCollection;
     }
 
     @Override
@@ -286,7 +295,7 @@ public class Usuarios implements Serializable {
 
     @Override
     public String toString() {
-        return "com.firefly.product.facturacion.negocio.Usuarios[ idusuarios=" + idusuarios + " ]";
+        return "com.firefly.product.facturacion.negocio.entities.Usuarios[ idusuarios=" + idusuarios + " ]";
     }
     
 }

@@ -39,7 +39,7 @@
                             <f:selectItems value="#{localeUtil.countryList}"
                                            var="country"
                                            itemValue="#{country.code}"
-                                           itemLabel="#{country.code}"/>
+                                           itemLabel="#{country.name}"/>
                         </p:selectOneMenu>
                         <h:outputText value="#{bundle.ViewEmpresasLabel_departamento}"/>
                         <h:outputText value="#{empresasController.selected.departamento}" title="#{bundle.ViewEmpresasTitle_departamento}"/>
