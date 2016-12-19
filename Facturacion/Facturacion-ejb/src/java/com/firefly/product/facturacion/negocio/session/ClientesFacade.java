@@ -44,13 +44,6 @@ public class ClientesFacade extends AbstractFacade<Clientes> {
 
         cq.where(cb.equal(c.get("tipoCliente"), 1));
         
-        System.out.println("-------------------------");
-        System.out.println("-------------------------");
-        System.out.println("-------------------------");
-        System.out.println(cq.toString());
-        System.out.println("-------------------------");
-        System.out.println("-------------------------");
-        
         return getEntityManager().createQuery(cq).getResultList();
     }
 
