@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ClientesCreateDlg" widgetVar="ClientesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateClientesTitle}">
+            <h:form id="ClientesCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid id="panel" columns="2" rendered="#{clientesController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateClientesLabel_tipoCliente}" for="tipoCliente" />
+                        <p:selectOneMenu valueChangeListener="#{clientesController.documentoValueChangeListener}"
+                                         id="tipoCliente" value="#{clientesController.selected.tipoCliente}" 
+                                         required="true" requiredMessage="#{bundle.CreateClientesRequiredMessage_tipoCliente}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="#{bundle.Person}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.Business}" itemValue="2"/>
+                            <f:ajax render="panel" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateClientesLabel_tipoDocumento}" for="tipoDocumento" />
+                        <p:selectOneMenu id="tipoDocumento" value="#{clientesController.selected.tipoDocumento}" 
+                                         required="true" requiredMessage="#{bundle.CreateClientesRequiredMessage_tipoDocumento}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="#{bundle.Doc1}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.Doc2}" itemValue="2"/>
+                            <f:selectItem itemLabel="#{bundle.Doc3}" itemValue="3"/>
+                            <f:selectItem itemLabel="#{bundle.Doc4}" itemValue="4"/>
+                            <f:selectItem itemLabel="#{bundle.Doc5}" itemValue="5"/>
+                            <f:selectItem itemLabel="#{bundle.Doc6}" itemValue="6"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateClientesLabel_documento}" for="documento" />
+                        <p:inputText id="documento" value="#{clientesController.selected.documento}" title="#{bundle.CreateClientesTitle_documento}" required="true" requiredMessage="#{bundle.CreateClientesRequiredMessage_documento}"/>
+                        <p:outputLabel rendered="#{clientesController.selected.tipoCliente==2}" value="#{bundle.CreateClientesLabel_digitoVerificacion}" for="digitoVerificacion" />
+                        <p:inputText maxlength="1" size="1" rendered="#{clientesController.selected.tipoCliente==2}" id="digitoVerificacion" value="#{clientesController.selected.digitoVerificacion}" 
+                                     title="#{bundle.CreateClientesTitle_digitoVerificacion}" />
+                        <p:outputLabel rendered="#{clientesController.selected.tipoCliente==2}" value="#{bundle.CreateClientesLabel_razonSocial}" for="razonSocial" />
+                        <p:inputText rendered="#{clientesController.selected.tipoCliente==2}" id="razonSocial" value="#{clientesController.selected.razonSocial}" title="#{bundle.CreateClientesTitle_razonSocial}" />
+                        <p:outputLabel rendered="#{clientesController.selected.tipoCliente==1}" value="#{bundle.CreateClientesLabel_primerNombre}" for="primerNombre" />
+                        <p:inputText rendered="#{clientesController.selected.tipoCliente==1}" id="primerNombre" value="#{clientesController.selected.primerNombre}" title="#{bundle.CreateClientesTitle_primerNombre}" />
+                        <p:outputLabel rendered="#{clientesController.selected.tipoCliente==1}" value="#{bundle.CreateClientesLabel_segundoNombre}" for="segundoNombre" />
+                        <p:inputText rendered="#{clientesController.selected.tipoCliente==1}" id="segundoNombre" value="#{clientesController.selected.segundoNombre}" title="#{bundle.CreateClientesTitle_segundoNombre}" />
+                        <p:outputLabel rendered="#{clientesController.selected.tipoCliente==1}" value="#{bundle.CreateClientesLabel_primerApellido}" for="primerApellido" />
+                        <p:inputText rendered="#{clientesController.selected.tipoCliente==1}" id="primerApellido" value="#{clientesController.selected.primerApellido}" title="#{bundle.CreateClientesTitle_primerApellido}" />
+                        <p:outputLabel rendered="#{clientesController.selected.tipoCliente==1}" value="#{bundle.CreateClientesLabel_segundoApellido}" for="segundoApellido" />
+                        <p:inputText rendered="#{clientesController.selected.tipoCliente==1}" id="segundoApellido" value="#{clientesController.selected.segundoApellido}" title="#{bundle.CreateClientesTitle_segundoApellido}" />
+                        <p:outputLabel rendered="#{clientesController.selected.tipoCliente==1}" value="#{bundle.CreateClientesLabel_fechaNacimiento}" for="fechaNacimiento" />
+                        <p:calendar rendered="#{clientesController.selected.tipoCliente==1}" id="fechaNacimiento" pattern="MM/dd/yyyy" value="#{clientesController.selected.fechaNacimiento}" title="#{bundle.EditClientesTitle_fechaNacimiento}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateClientesLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{clientesController.selected.telefono}" title="#{bundle.CreateClientesTitle_telefono}" />
+                        <p:outputLabel value="#{bundle.CreateClientesLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{clientesController.selected.direccion}" title="#{bundle.CreateClientesTitle_direccion}" />
+                        <p:outputLabel value="#{bundle.CreateClientesLabel_correoElectronico}" for="correoElectronico" />
+                        <p:inputText id="correoElectronico" value="#{clientesController.selected.correoElectronico}" title="#{bundle.CreateClientesTitle_correoElectronico}" />
+                        <p:outputLabel value="#{bundle.CreateClientesLabel_cliente}" for="cliente" />
+                        <p:selectBooleanCheckbox id="cliente" value="#{clientesController.selected.cliente}" />
+                        <p:outputLabel value="#{bundle.CreateClientesLabel_proveedor}" for="proveedor" />
+                        <p:selectBooleanCheckbox id="proveedor" value="#{clientesController.selected.proveedor}" />
+                        <p:outputLabel value="#{bundle.CreateClientesLabel_paginaWeb}" for="paginaWeb" />
+                        <p:inputText id="paginaWeb" value="#{clientesController.selected.paginaWeb}" title="#{bundle.CreateClientesTitle_paginaWeb}" />
+                        <p:outputLabel value="#{bundle.CreateClientesLabel_estado}" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{clientesController.selected.estado}" >
+                            <f:selectItem itemLabel="#{bundle.Active}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.Inactive}" itemValue="2"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel rendered="#{clientesController.selected.tipoCliente==2}" value="#{bundle.CreateClientesLabel_idrepresentantelegal}" for="idrepresentantelegal" />
+                        <p:selectOneMenu rendered="#{clientesController.selected.tipoCliente==2}" id="idrepresentantelegal" value="#{clientesController.selected.idrepresentantelegal}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" noSelectionOption="true"/>
+                            <f:selectItems value="#{clientesController.itemsAvailableSelectOnePersons}"
+                                           var="idrepresentantelegalItem"
+                                           itemLabel="#{idrepresentantelegalItem.primerNombre} #{idrepresentantelegalItem.primerApellido}"
+                                           itemValue="#{idrepresentantelegalItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{clientesController.create}" value="#{bundle.Save}" update="display,:ClientesListForm:datalist,:growl" oncomplete="handleSubmit(args,'ClientesCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ClientesCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

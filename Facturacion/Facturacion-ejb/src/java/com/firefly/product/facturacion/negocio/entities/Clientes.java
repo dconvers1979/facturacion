@@ -9,10 +9,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author dclav
  */
 @Entity
-@Table(name = "clientes", catalog = "facturacion", schema = "")
+@Table(name = "clientes")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Clientes.findAll", query = "SELECT c FROM Clientes c"),
@@ -50,7 +48,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Clientes.findByCliente", query = "SELECT c FROM Clientes c WHERE c.cliente = :cliente"),
     @NamedQuery(name = "Clientes.findByProveedor", query = "SELECT c FROM Clientes c WHERE c.proveedor = :proveedor"),
     @NamedQuery(name = "Clientes.findByPaginaWeb", query = "SELECT c FROM Clientes c WHERE c.paginaWeb = :paginaWeb"),
-    @NamedQuery(name = "Clientes.findByEstado", query = "SELECT c FROM Clientes c WHERE c.estado = :estado")})
+    @NamedQuery(name = "Clientes.findByEstado", query = "SELECT c FROM Clientes c WHERE c.estado = :estado"),
+    @NamedQuery(name = "Clientes.findByDigitoVerificacion", query = "SELECT c FROM Clientes c WHERE c.digitoVerificacion = :digitoVerificacion"),
+    @NamedQuery(name = "Clientes.findByPrimerNombre", query = "SELECT c FROM Clientes c WHERE c.primerNombre = :primerNombre"),
+    @NamedQuery(name = "Clientes.findBySegundoNombre", query = "SELECT c FROM Clientes c WHERE c.segundoNombre = :segundoNombre"),
+    @NamedQuery(name = "Clientes.findByPrimerApellido", query = "SELECT c FROM Clientes c WHERE c.primerApellido = :primerApellido"),
+    @NamedQuery(name = "Clientes.findBySegundoApellido", query = "SELECT c FROM Clientes c WHERE c.segundoApellido = :segundoApellido")})
 public class Clientes implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -96,14 +99,24 @@ public class Clientes implements Serializable {
     private String paginaWeb;
     @Column(name = "estado")
     private Integer estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.EAGER)
-    private Collection<Factura> facturaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idclientes", fetch = FetchType.EAGER)
-    private Collection<Cuentacliente> cuentaclienteCollection;
-    @OneToMany(mappedBy = "idrepresentantelegal", fetch = FetchType.EAGER)
+    @Column(name = "digitoVerificacion")
+    private Integer digitoVerificacion;
+    @Size(max = 45)
+    @Column(name = "primerNombre")
+    private String primerNombre;
+    @Size(max = 45)
+    @Column(name = "segundoNombre")
+    private String segundoNombre;
+    @Size(max = 45)
+    @Column(name = "primerApellido")
+    private String primerApellido;
+    @Size(max = 45)
+    @Column(name = "segundoApellido")
+    private String segundoApellido;
+    @OneToMany(mappedBy = "idrepresentantelegal")
     private Collection<Clientes> clientesCollection;
     @JoinColumn(name = "idrepresentantelegal", referencedColumnName = "idclientes")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Clientes idrepresentantelegal;
 
     public Clientes() {
@@ -224,22 +237,44 @@ public class Clientes implements Serializable {
         this.estado = estado;
     }
 
-    @XmlTransient
-    public Collection<Factura> getFacturaCollection() {
-        return facturaCollection;
+    public Integer getDigitoVerificacion() {
+        return digitoVerificacion;
     }
 
-    public void setFacturaCollection(Collection<Factura> facturaCollection) {
-        this.facturaCollection = facturaCollection;
+    public void setDigitoVerificacion(Integer digitoVerificacion) {
+        this.digitoVerificacion = digitoVerificacion;
     }
 
-    @XmlTransient
-    public Collection<Cuentacliente> getCuentaclienteCollection() {
-        return cuentaclienteCollection;
+    public String getPrimerNombre() {
+        return primerNombre;
     }
 
-    public void setCuentaclienteCollection(Collection<Cuentacliente> cuentaclienteCollection) {
-        this.cuentaclienteCollection = cuentaclienteCollection;
+    public void setPrimerNombre(String primerNombre) {
+        this.primerNombre = primerNombre;
+    }
+
+    public String getSegundoNombre() {
+        return segundoNombre;
+    }
+
+    public void setSegundoNombre(String segundoNombre) {
+        this.segundoNombre = segundoNombre;
+    }
+
+    public String getPrimerApellido() {
+        return primerApellido;
+    }
+
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido = primerApellido;
+    }
+
+    public String getSegundoApellido() {
+        return segundoApellido;
+    }
+
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido = segundoApellido;
     }
 
     @XmlTransient
@@ -281,7 +316,7 @@ public class Clientes implements Serializable {
 
     @Override
     public String toString() {
-        return "com.firefly.product.facturacion.negocio.Clientes[ idclientes=" + idclientes + " ]";
+        return "com.firefly.product.facturacion.negocio.entities.Clientes[ idclientes=" + idclientes + " ]";
     }
     
 }

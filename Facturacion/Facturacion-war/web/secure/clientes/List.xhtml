@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListClientesTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="ClientesListForm">
+                <p:panel header="#{bundle.ListClientesTitle}">
+                    <p:dataTable id="datalist" value="#{clientesController.items}" var="item"
+                                 selectionMode="single" selection="#{clientesController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idclientes}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClientesTitle_tipoCliente}"/>
+                            </f:facet>
+                            <p:selectOneMenu id="tipoCliente" value="#{item.tipoCliente}" disabled="true">
+                                <f:selectItem itemLabel="#{bundle.Person}" itemValue="1"/>
+                                <f:selectItem itemLabel="#{bundle.Business}" itemValue="2"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClientesTitle_razonSocial}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.razonSocial}"/>
+                            <h:outputText value="#{item.primerNombre} "/>
+                            <h:outputText value="#{item.primerApellido}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClientesTitle_tipoDocumento}"/>
+                            </f:facet>
+                            <p:selectOneMenu id="tipoDocumento" value="#{item.tipoDocumento}" 
+                                             disabled="true" >
+                                <f:selectItem itemLabel="#{bundle.Doc1}" itemValue="1"/>
+                                <f:selectItem itemLabel="#{bundle.Doc2}" itemValue="2"/>
+                                <f:selectItem itemLabel="#{bundle.Doc3}" itemValue="3"/>
+                                <f:selectItem itemLabel="#{bundle.Doc4}" itemValue="4"/>
+                                <f:selectItem itemLabel="#{bundle.Doc5}" itemValue="5"/>
+                                <f:selectItem itemLabel="#{bundle.Doc6}" itemValue="6"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClientesTitle_documento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.documento} #{item.digitoVerificacion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClientesTitle_telefono}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.telefono}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClientesTitle_correoElectronico}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.correoElectronico}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClientesTitle_cliente}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.cliente}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClientesTitle_proveedor}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.proveedor}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClientesTitle_estado}"/>
+                            </f:facet>
+                            <p:selectOneMenu id="estado" value="#{item.estado}" disabled="true" >
+                                <f:selectItem itemLabel="#{bundle.Active}" itemValue="1"/>
+                                <f:selectItem itemLabel="#{bundle.Inactive}" itemValue="2"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListClientesTitle_idrepresentantelegal}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idrepresentantelegal.primerNombre} #{item.idrepresentantelegal.primerApellido}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{clientesController.prepareCreate}" update=":ClientesCreateForm" oncomplete="PF('ClientesCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ClientesViewForm" oncomplete="PF('ClientesViewDialog').show()" disabled="#{empty clientesController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ClientesEditForm" oncomplete="PF('ClientesEditDialog').show()" disabled="#{empty clientesController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{clientesController.destroy}" update=":growl,datalist" disabled="#{empty clientesController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

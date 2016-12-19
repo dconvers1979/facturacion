@@ -6,9 +6,14 @@
 package com.firefly.product.facturacion.negocio.session;
 
 import com.firefly.product.facturacion.negocio.entities.Clientes;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -28,5 +33,25 @@ public class ClientesFacade extends AbstractFacade<Clientes> {
     public ClientesFacade() {
         super(Clientes.class);
     }
-    
+
+    public List<Clientes> findAllPersons() {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+
+        CriteriaQuery<Clientes> q = cb.createQuery(Clientes.class);
+        Root<Clientes> c = q.from(Clientes.class);
+
+        cq.where(cb.equal(c.get("tipoCliente"), 1));
+        
+        System.out.println("-------------------------");
+        System.out.println("-------------------------");
+        System.out.println("-------------------------");
+        System.out.println(cq.toString());
+        System.out.println("-------------------------");
+        System.out.println("-------------------------");
+        
+        return getEntityManager().createQuery(cq).getResultList();
+    }
+
 }

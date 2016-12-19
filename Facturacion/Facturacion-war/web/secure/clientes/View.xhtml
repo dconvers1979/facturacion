@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ClientesViewDlg" widgetVar="ClientesViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewClientesTitle}">
+            <h:form id="ClientesViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{clientesController.selected != null}">
+                        <h:outputText value="#{bundle.ViewClientesLabel_tipoCliente}"/>
+                        <p:selectOneMenu id="tipoCliente" value="#{clientesController.selected.tipoCliente}" disabled="true">
+                            <f:selectItem itemLabel="#{bundle.Person}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.Business}" itemValue="2"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="#{bundle.ViewClientesLabel_tipoDocumento}"/>
+                        <p:selectOneMenu id="tipoDocumento" value="#{clientesController.selected.tipoDocumento}" 
+                                         disabled="true" >
+                            <f:selectItem itemLabel="#{bundle.Doc1}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.Doc2}" itemValue="2"/>
+                            <f:selectItem itemLabel="#{bundle.Doc3}" itemValue="3"/>
+                            <f:selectItem itemLabel="#{bundle.Doc4}" itemValue="4"/>
+                            <f:selectItem itemLabel="#{bundle.Doc5}" itemValue="5"/>
+                            <f:selectItem itemLabel="#{bundle.Doc6}" itemValue="6"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="#{bundle.ViewClientesLabel_documento}"/>
+                        <h:outputText value="#{clientesController.selected.documento} #{clientesController.selected.digitoVerificacion}" title="#{bundle.ViewClientesTitle_documento}"/>
+                        <h:outputText rendered="#{clientesController.selected.tipoCliente==2}" value="#{bundle.ViewClientesLabel_razonSocial}"/>
+                        <h:outputText rendered="#{clientesController.selected.tipoCliente==2}" value="#{clientesController.selected.razonSocial}" title="#{bundle.ViewClientesTitle_razonSocial}"/>
+                        <p:outputLabel rendered="#{clientesController.selected.tipoCliente==1}" value="#{bundle.ViewClientesLabel_primerNombre}" for="primerNombre" />
+                        <h:outputText rendered="#{clientesController.selected.tipoCliente==1}" id="primerNombre" value="#{clientesController.selected.primerNombre}" title="#{bundle.ViewClientesTitle_primerNombre}" />
+                        <p:outputLabel rendered="#{clientesController.selected.tipoCliente==1}" value="#{bundle.ViewClientesLabel_segundoNombre}" for="segundoNombre" />
+                        <h:outputText rendered="#{clientesController.selected.tipoCliente==1}" id="segundoNombre" value="#{clientesController.selected.segundoNombre}" title="#{bundle.ViewClientesTitle_segundoNombre}" />
+                        <p:outputLabel rendered="#{clientesController.selected.tipoCliente==1}" value="#{bundle.ViewClientesLabel_primerApellido}" for="primerApellido" />
+                        <h:outputText rendered="#{clientesController.selected.tipoCliente==1}" id="primerApellido" value="#{clientesController.selected.primerApellido}" title="#{bundle.ViewClientesTitle_primerApellido}" />
+                        <p:outputLabel rendered="#{clientesController.selected.tipoCliente==1}" value="#{bundle.ViewClientesLabel_segundoApellido}" for="segundoApellido" />
+                        <h:outputText rendered="#{clientesController.selected.tipoCliente==1}" id="segundoApellido" value="#{clientesController.selected.segundoApellido}" title="#{bundle.ViewClientesTitle_segundoApellido}" />
+                        <h:outputText value="#{bundle.ViewClientesLabel_fechaNacimiento}"/>
+                        <h:outputText value="#{clientesController.selected.fechaNacimiento}" title="#{bundle.ViewClientesTitle_fechaNacimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewClientesLabel_telefono}"/>
+                        <h:outputText value="#{clientesController.selected.telefono}" title="#{bundle.ViewClientesTitle_telefono}"/>
+                        <h:outputText value="#{bundle.ViewClientesLabel_direccion}"/>
+                        <h:outputText value="#{clientesController.selected.direccion}" title="#{bundle.ViewClientesTitle_direccion}"/>
+                        <h:outputText value="#{bundle.ViewClientesLabel_correoElectronico}"/>
+                        <h:outputText value="#{clientesController.selected.correoElectronico}" title="#{bundle.ViewClientesTitle_correoElectronico}"/>
+                        <h:outputText value="#{bundle.ViewClientesLabel_cliente}"/>
+                        <p:selectBooleanCheckbox value="#{clientesController.selected.cliente}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewClientesLabel_proveedor}"/>
+                        <p:selectBooleanCheckbox value="#{clientesController.selected.proveedor}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewClientesLabel_paginaWeb}"/>
+                        <h:outputText value="#{clientesController.selected.paginaWeb}" title="#{bundle.ViewClientesTitle_paginaWeb}"/>
+                        <h:outputText value="#{bundle.ViewClientesLabel_estado}"/>
+                        <p:selectOneMenu id="estado" value="#{clientesController.selected.estado}" disabled="true" >
+                            <f:selectItem itemLabel="#{bundle.Active}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.Inactive}" itemValue="2"/>
+                        </p:selectOneMenu>
+                        <h:outputText rendered="#{clientesController.selected.tipoCliente==2}" value="#{bundle.ViewClientesLabel_idrepresentantelegal}"/>
+                        <h:outputText rendered="#{clientesController.selected.tipoCliente==2}" value="#{clientesController.selected.idrepresentantelegal.primerNombre} #{clientesController.selected.idrepresentantelegal.primerApellido}" title="#{bundle.ViewClientesTitle_idrepresentantelegal}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ClientesViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
