@@ -11,7 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author dclav
  */
 @Entity
-@Table(name = "empresas", catalog = "facturacion", schema = "")
+@Table(name = "empresas")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Empresas.findAll", query = "SELECT e FROM Empresas e"),
@@ -107,12 +106,8 @@ public class Empresas implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "ciudad")
     private String ciudad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idempresa", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idempresa")
     private Collection<Resolucionfacturacion> resolucionfacturacionCollection;
-    @OneToMany(mappedBy = "idEmpresa", fetch = FetchType.EAGER)
-    private Collection<Sucursalesempresas> sucursalesempresasCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idempresas", fetch = FetchType.EAGER)
-    private Collection<Cuentaempresa> cuentaempresaCollection;
 
     public Empresas() {
     }
@@ -247,24 +242,6 @@ public class Empresas implements Serializable {
         this.resolucionfacturacionCollection = resolucionfacturacionCollection;
     }
 
-    @XmlTransient
-    public Collection<Sucursalesempresas> getSucursalesempresasCollection() {
-        return sucursalesempresasCollection;
-    }
-
-    public void setSucursalesempresasCollection(Collection<Sucursalesempresas> sucursalesempresasCollection) {
-        this.sucursalesempresasCollection = sucursalesempresasCollection;
-    }
-
-    @XmlTransient
-    public Collection<Cuentaempresa> getCuentaempresaCollection() {
-        return cuentaempresaCollection;
-    }
-
-    public void setCuentaempresaCollection(Collection<Cuentaempresa> cuentaempresaCollection) {
-        this.cuentaempresaCollection = cuentaempresaCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -287,7 +264,7 @@ public class Empresas implements Serializable {
 
     @Override
     public String toString() {
-        return "com.firefly.product.facturacion.negocio.Empresas[ idempresa=" + idempresa + " ]";
+        return "com.firefly.product.facturacion.negocio.entities.Empresas[ idempresa=" + idempresa + " ]";
     }
     
 }

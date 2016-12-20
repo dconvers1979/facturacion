@@ -6,12 +6,10 @@
 package com.firefly.product.facturacion.negocio.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,19 +17,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author dclav
  */
 @Entity
-@Table(name = "resolucionfacturacion", catalog = "facturacion", schema = "")
+@Table(name = "resolucionfacturacion")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Resolucionfacturacion.findAll", query = "SELECT r FROM Resolucionfacturacion r"),
@@ -41,7 +39,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Resolucionfacturacion.findByRangoInicial", query = "SELECT r FROM Resolucionfacturacion r WHERE r.rangoInicial = :rangoInicial"),
     @NamedQuery(name = "Resolucionfacturacion.findByRangoFinal", query = "SELECT r FROM Resolucionfacturacion r WHERE r.rangoFinal = :rangoFinal"),
     @NamedQuery(name = "Resolucionfacturacion.findBySecuencia", query = "SELECT r FROM Resolucionfacturacion r WHERE r.secuencia = :secuencia"),
-    @NamedQuery(name = "Resolucionfacturacion.findByEstado", query = "SELECT r FROM Resolucionfacturacion r WHERE r.estado = :estado")})
+    @NamedQuery(name = "Resolucionfacturacion.findByEstado", query = "SELECT r FROM Resolucionfacturacion r WHERE r.estado = :estado"),
+    @NamedQuery(name = "Resolucionfacturacion.findByNumeroResolucion", query = "SELECT r FROM Resolucionfacturacion r WHERE r.numeroResolucion = :numeroResolucion"),
+    @NamedQuery(name = "Resolucionfacturacion.findByFechaExpedicion", query = "SELECT r FROM Resolucionfacturacion r WHERE r.fechaExpedicion = :fechaExpedicion"),
+    @NamedQuery(name = "Resolucionfacturacion.findByFechaVigencia", query = "SELECT r FROM Resolucionfacturacion r WHERE r.fechaVigencia = :fechaVigencia")})
 public class Resolucionfacturacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -73,11 +74,24 @@ public class Resolucionfacturacion implements Serializable {
     @NotNull
     @Column(name = "estado")
     private int estado;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "numeroResolucion")
+    private String numeroResolucion;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "fechaExpedicion")
+    @Temporal(TemporalType.DATE)
+    private Date fechaExpedicion;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "fechaVigencia")
+    @Temporal(TemporalType.DATE)
+    private Date fechaVigencia;
     @JoinColumn(name = "idempresa", referencedColumnName = "idempresa")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Empresas idempresa;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idresolucion", fetch = FetchType.EAGER)
-    private Collection<Factura> facturaCollection;
 
     public Resolucionfacturacion() {
     }
@@ -86,13 +100,16 @@ public class Resolucionfacturacion implements Serializable {
         this.idresolucionFacturacion = idresolucionFacturacion;
     }
 
-    public Resolucionfacturacion(Integer idresolucionFacturacion, int tipoResolucion, int rangoInicial, int rangoFinal, int secuencia, int estado) {
+    public Resolucionfacturacion(Integer idresolucionFacturacion, int tipoResolucion, int rangoInicial, int rangoFinal, int secuencia, int estado, String numeroResolucion, Date fechaExpedicion, Date fechaVigencia) {
         this.idresolucionFacturacion = idresolucionFacturacion;
         this.tipoResolucion = tipoResolucion;
         this.rangoInicial = rangoInicial;
         this.rangoFinal = rangoFinal;
         this.secuencia = secuencia;
         this.estado = estado;
+        this.numeroResolucion = numeroResolucion;
+        this.fechaExpedicion = fechaExpedicion;
+        this.fechaVigencia = fechaVigencia;
     }
 
     public Integer getIdresolucionFacturacion() {
@@ -151,21 +168,36 @@ public class Resolucionfacturacion implements Serializable {
         this.estado = estado;
     }
 
+    public String getNumeroResolucion() {
+        return numeroResolucion;
+    }
+
+    public void setNumeroResolucion(String numeroResolucion) {
+        this.numeroResolucion = numeroResolucion;
+    }
+
+    public Date getFechaExpedicion() {
+        return fechaExpedicion;
+    }
+
+    public void setFechaExpedicion(Date fechaExpedicion) {
+        this.fechaExpedicion = fechaExpedicion;
+    }
+
+    public Date getFechaVigencia() {
+        return fechaVigencia;
+    }
+
+    public void setFechaVigencia(Date fechaVigencia) {
+        this.fechaVigencia = fechaVigencia;
+    }
+
     public Empresas getIdempresa() {
         return idempresa;
     }
 
     public void setIdempresa(Empresas idempresa) {
         this.idempresa = idempresa;
-    }
-
-    @XmlTransient
-    public Collection<Factura> getFacturaCollection() {
-        return facturaCollection;
-    }
-
-    public void setFacturaCollection(Collection<Factura> facturaCollection) {
-        this.facturaCollection = facturaCollection;
     }
 
     @Override
@@ -190,7 +222,7 @@ public class Resolucionfacturacion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.firefly.product.facturacion.negocio.Resolucionfacturacion[ idresolucionFacturacion=" + idresolucionFacturacion + " ]";
+        return "com.firefly.product.facturacion.negocio.entities.Resolucionfacturacion[ idresolucionFacturacion=" + idresolucionFacturacion + " ]";
     }
     
 }

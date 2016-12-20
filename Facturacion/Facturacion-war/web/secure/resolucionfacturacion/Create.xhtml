@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ResolucionfacturacionCreateDlg" widgetVar="ResolucionfacturacionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateResolucionfacturacionTitle}">
+            <h:form id="ResolucionfacturacionCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{resolucionfacturacionController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateResolucionfacturacionLabel_tipoResolucion}" for="tipoResolucion" />
+                        <p:selectOneMenu id="tipoResolucion" value="#{resolucionfacturacionController.selected.tipoResolucion}" 
+                                     required="true" requiredMessage="#{bundle.CreateResolucionfacturacionRequiredMessage_tipoResolucion}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="#{bundle.Computer}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.Electronic}" itemValue="2"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateResolucionfacturacionLabel_prefijo}" for="prefijo" />
+                        <p:inputText id="prefijo" value="#{resolucionfacturacionController.selected.prefijo}" title="#{bundle.CreateResolucionfacturacionTitle_prefijo}" />
+                        <p:outputLabel value="#{bundle.CreateResolucionfacturacionLabel_rangoInicial}" for="rangoInicial" />
+                        <p:inputText id="rangoInicial" value="#{resolucionfacturacionController.selected.rangoInicial}" title="#{bundle.CreateResolucionfacturacionTitle_rangoInicial}" required="true" requiredMessage="#{bundle.CreateResolucionfacturacionRequiredMessage_rangoInicial}"/>
+                        <p:outputLabel value="#{bundle.CreateResolucionfacturacionLabel_rangoFinal}" for="rangoFinal" />
+                        <p:inputText id="rangoFinal" value="#{resolucionfacturacionController.selected.rangoFinal}" title="#{bundle.CreateResolucionfacturacionTitle_rangoFinal}" required="true" requiredMessage="#{bundle.CreateResolucionfacturacionRequiredMessage_rangoFinal}"/>
+                        <p:outputLabel value="#{bundle.CreateResolucionfacturacionLabel_secuencia}" for="secuencia" />
+                        <p:inputText disabled="true" id="secuencia" value="#{resolucionfacturacionController.selected.secuencia}" title="#{bundle.CreateResolucionfacturacionTitle_secuencia}" required="true" requiredMessage="#{bundle.CreateResolucionfacturacionRequiredMessage_secuencia}"/>
+                        <p:outputLabel value="#{bundle.CreateResolucionfacturacionLabel_estado}" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{resolucionfacturacionController.selected.estado}" 
+                                     required="true" requiredMessage="#{bundle.CreateResolucionfacturacionRequiredMessage_estado}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="#{bundle.Active}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.Inactive}" itemValue="2"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateResolucionfacturacionLabel_numeroResolucion}" for="numeroResolucion" />
+                        <p:inputText id="numeroResolucion" value="#{resolucionfacturacionController.selected.numeroResolucion}" title="#{bundle.CreateResolucionfacturacionTitle_numeroResolucion}" required="true" requiredMessage="#{bundle.CreateResolucionfacturacionRequiredMessage_numeroResolucion}"/>
+                        <p:outputLabel value="#{bundle.CreateResolucionfacturacionLabel_fechaExpedicion}" for="fechaExpedicion" />
+                        <p:calendar id="fechaExpedicion" pattern="MM/dd/yyyy" value="#{resolucionfacturacionController.selected.fechaExpedicion}" title="#{bundle.EditResolucionfacturacionTitle_fechaExpedicion}" required="true" requiredMessage="#{bundle.EditResolucionfacturacionRequiredMessage_fechaExpedicion}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateResolucionfacturacionLabel_fechaVigencia}" for="fechaVigencia" />
+                        <p:calendar id="fechaVigencia" pattern="MM/dd/yyyy" value="#{resolucionfacturacionController.selected.fechaVigencia}" title="#{bundle.EditResolucionfacturacionTitle_fechaVigencia}" required="true" requiredMessage="#{bundle.EditResolucionfacturacionRequiredMessage_fechaVigencia}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateResolucionfacturacionLabel_idempresa}" for="idempresa" />
+                        <p:selectOneMenu id="idempresa" value="#{resolucionfacturacionController.selected.idempresa}" required="true" requiredMessage="#{bundle.EditResolucionfacturacionRequiredMessage_idempresa}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" noSelectionOption="true"/>
+                            <f:selectItems value="#{empresasController.itemsAvailableSelectOne}"
+                                           var="idempresaItem"
+                                           itemLabel="#{idempresaItem.razonSocial}"
+                                           itemValue="#{idempresaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{resolucionfacturacionController.create}" value="#{bundle.Save}" update="display,:ResolucionfacturacionListForm:datalist,:growl" oncomplete="handleSubmit(args,'ResolucionfacturacionCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ResolucionfacturacionCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
