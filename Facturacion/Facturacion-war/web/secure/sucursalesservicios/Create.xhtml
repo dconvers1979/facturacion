@@ -23,7 +23,7 @@
                         <p:outputLabel value="#{bundle.CreateSucursalesserviciosLabel_idsucursales}" for="idsucursales" />
                         <p:selectOneMenu id="idsucursales" value="#{sucursalesserviciosController.selected.idsucursales}" required="true" requiredMessage="#{bundle.EditSucursalesserviciosRequiredMessage_idsucursales}">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{sucursalesController.itemsAvailableSelectOne}"
+                            <f:selectItems value="#{sucursalesController.itemsAvailableSelectOneServicios}"
                                            var="idsucursalesItem"
                                            itemLabel="#{idsucursalesItem.nombre}"
                                            itemValue="#{idsucursalesItem}"/>

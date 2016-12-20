@@ -120,6 +120,14 @@ public class SucursalesController implements Serializable {
     public List<Sucursales> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
+    
+    public List<Sucursales> getItemsAvailableSelectOneServicios() {
+        return getFacade().findAllSucursalesServices();
+    }
+    
+    public List<Sucursales> getItemsAvailableSelectOneProductos() {
+        return getFacade().findAllSucursalesProducts();
+    }
 
     @FacesConverter(forClass = Sucursales.class)
     public static class SucursalesControllerConverter implements Converter {
