@@ -53,7 +53,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Clientes.findByPrimerNombre", query = "SELECT c FROM Clientes c WHERE c.primerNombre = :primerNombre"),
     @NamedQuery(name = "Clientes.findBySegundoNombre", query = "SELECT c FROM Clientes c WHERE c.segundoNombre = :segundoNombre"),
     @NamedQuery(name = "Clientes.findByPrimerApellido", query = "SELECT c FROM Clientes c WHERE c.primerApellido = :primerApellido"),
-    @NamedQuery(name = "Clientes.findBySegundoApellido", query = "SELECT c FROM Clientes c WHERE c.segundoApellido = :segundoApellido")})
+    @NamedQuery(name = "Clientes.findBySegundoApellido", query = "SELECT c FROM Clientes c WHERE c.segundoApellido = :segundoApellido"),
+    @NamedQuery(name = "Clientes.findByPais", query = "SELECT c FROM Clientes c WHERE c.pais = :pais"),
+    @NamedQuery(name = "Clientes.findByDepartamento", query = "SELECT c FROM Clientes c WHERE c.departamento = :departamento"),
+    @NamedQuery(name = "Clientes.findByCiudad", query = "SELECT c FROM Clientes c WHERE c.ciudad = :ciudad")})
 public class Clientes implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -113,6 +116,15 @@ public class Clientes implements Serializable {
     @Size(max = 45)
     @Column(name = "segundoApellido")
     private String segundoApellido;
+    @Size(max = 45)
+    @Column(name = "pais")
+    private String pais;
+    @Size(max = 45)
+    @Column(name = "departamento")
+    private String departamento;
+    @Size(max = 45)
+    @Column(name = "ciudad")
+    private String ciudad;
     @OneToMany(mappedBy = "idrepresentantelegal")
     private Collection<Clientes> clientesCollection;
     @JoinColumn(name = "idrepresentantelegal", referencedColumnName = "idclientes")
@@ -275,6 +287,30 @@ public class Clientes implements Serializable {
 
     public void setSegundoApellido(String segundoApellido) {
         this.segundoApellido = segundoApellido;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 
     @XmlTransient

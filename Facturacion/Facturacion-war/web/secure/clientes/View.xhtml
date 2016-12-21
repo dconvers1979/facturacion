@@ -47,6 +47,19 @@
                         <h:outputText value="#{clientesController.selected.telefono}" title="#{bundle.ViewClientesTitle_telefono}"/>
                         <h:outputText value="#{bundle.ViewClientesLabel_direccion}"/>
                         <h:outputText value="#{clientesController.selected.direccion}" title="#{bundle.ViewClientesTitle_direccion}"/>
+                        <h:outputText value="#{bundle.ViewClientesLabel_pais}"/>
+                        <p:selectOneMenu id="pais" value="#{clientesController.selected.pais}" 
+                                         disabled="true"  >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{localeUtil.countryList}"
+                                           var="country"
+                                           itemValue="#{country.code}"
+                                           itemLabel="#{country.name}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="#{bundle.ViewClientesLabel_departamento}"/>
+                        <h:outputText value="#{clientesController.selected.departamento}" title="#{bundle.ViewClientesTitle_departamento}"/>
+                        <h:outputText value="#{bundle.ViewClientesLabel_ciudad}"/>
+                        <h:outputText value="#{clientesController.selected.ciudad}" title="#{bundle.ViewClientesTitle_ciudad}"/>
                         <h:outputText value="#{bundle.ViewClientesLabel_correoElectronico}"/>
                         <h:outputText value="#{clientesController.selected.correoElectronico}" title="#{bundle.ViewClientesTitle_correoElectronico}"/>
                         <h:outputText value="#{bundle.ViewClientesLabel_cliente}"/>
