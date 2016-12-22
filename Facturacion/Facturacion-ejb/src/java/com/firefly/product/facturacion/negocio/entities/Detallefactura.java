@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -23,16 +25,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author dclav
  */
 @Entity
-@Table(name = "detallefactura", catalog = "facturacion", schema = "")
+@Table(name = "detallefactura")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Detallefactura.findAll", query = "SELECT d FROM Detallefactura d"),
     @NamedQuery(name = "Detallefactura.findByIddetalleFactura", query = "SELECT d FROM Detallefactura d WHERE d.iddetalleFactura = :iddetalleFactura"),
-    @NamedQuery(name = "Detallefactura.findByIdservicio", query = "SELECT d FROM Detallefactura d WHERE d.idservicio = :idservicio"),
     @NamedQuery(name = "Detallefactura.findByCantidad", query = "SELECT d FROM Detallefactura d WHERE d.cantidad = :cantidad"),
     @NamedQuery(name = "Detallefactura.findByDescuento", query = "SELECT d FROM Detallefactura d WHERE d.descuento = :descuento"),
     @NamedQuery(name = "Detallefactura.findByTotal", query = "SELECT d FROM Detallefactura d WHERE d.total = :total"),
-    @NamedQuery(name = "Detallefactura.findByTotalImpuesto", query = "SELECT d FROM Detallefactura d WHERE d.totalImpuesto = :totalImpuesto")})
+    @NamedQuery(name = "Detallefactura.findByTotalImpuesto", query = "SELECT d FROM Detallefactura d WHERE d.totalImpuesto = :totalImpuesto"),
+    @NamedQuery(name = "Detallefactura.findByPrecioUnitario", query = "SELECT d FROM Detallefactura d WHERE d.precioUnitario = :precioUnitario")})
 public class Detallefactura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,10 +43,6 @@ public class Detallefactura implements Serializable {
     @Basic(optional = false)
     @Column(name = "iddetalleFactura")
     private Integer iddetalleFactura;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idservicio")
-    private int idservicio;
     @Basic(optional = false)
     @NotNull
     @Column(name = "cantidad")
@@ -60,6 +58,14 @@ public class Detallefactura implements Serializable {
     @NotNull
     @Column(name = "totalImpuesto")
     private float totalImpuesto;
+    @Column(name = "precioUnitario")
+    private Float precioUnitario;
+    @JoinColumn(name = "idFactura", referencedColumnName = "idfactura")
+    @ManyToOne(optional = false)
+    private Factura idFactura;
+    @JoinColumn(name = "idservicio", referencedColumnName = "idServicios")
+    @ManyToOne(optional = false)
+    private Servicios idservicio;
 
     public Detallefactura() {
     }
@@ -68,9 +74,8 @@ public class Detallefactura implements Serializable {
         this.iddetalleFactura = iddetalleFactura;
     }
 
-    public Detallefactura(Integer iddetalleFactura, int idservicio, int cantidad, float total, float totalImpuesto) {
+    public Detallefactura(Integer iddetalleFactura, int cantidad, float total, float totalImpuesto) {
         this.iddetalleFactura = iddetalleFactura;
-        this.idservicio = idservicio;
         this.cantidad = cantidad;
         this.total = total;
         this.totalImpuesto = totalImpuesto;
@@ -82,14 +87,6 @@ public class Detallefactura implements Serializable {
 
     public void setIddetalleFactura(Integer iddetalleFactura) {
         this.iddetalleFactura = iddetalleFactura;
-    }
-
-    public int getIdservicio() {
-        return idservicio;
-    }
-
-    public void setIdservicio(int idservicio) {
-        this.idservicio = idservicio;
     }
 
     public int getCantidad() {
@@ -124,6 +121,30 @@ public class Detallefactura implements Serializable {
         this.totalImpuesto = totalImpuesto;
     }
 
+    public Float getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(Float precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public Factura getIdFactura() {
+        return idFactura;
+    }
+
+    public void setIdFactura(Factura idFactura) {
+        this.idFactura = idFactura;
+    }
+
+    public Servicios getIdservicio() {
+        return idservicio;
+    }
+
+    public void setIdservicio(Servicios idservicio) {
+        this.idservicio = idservicio;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -146,7 +167,7 @@ public class Detallefactura implements Serializable {
 
     @Override
     public String toString() {
-        return "com.firefly.product.facturacion.negocio.Detallefactura[ iddetalleFactura=" + iddetalleFactura + " ]";
+        return "com.firefly.product.facturacion.negocio.entities.Detallefactura[ iddetalleFactura=" + iddetalleFactura + " ]";
     }
     
 }

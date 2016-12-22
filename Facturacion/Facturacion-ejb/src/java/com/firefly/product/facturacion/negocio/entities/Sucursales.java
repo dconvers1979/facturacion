@@ -8,6 +8,7 @@ package com.firefly.product.facturacion.negocio.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,6 +46,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Sucursales.findByManejaServicios", query = "SELECT s FROM Sucursales s WHERE s.manejaServicios = :manejaServicios"),
     @NamedQuery(name = "Sucursales.findByHabilitadaFacturar", query = "SELECT s FROM Sucursales s WHERE s.habilitadaFacturar = :habilitadaFacturar")})
 public class Sucursales implements Serializable {
+
+    @JoinColumn(name = "tipoSucursal", referencedColumnName = "idtipoSucursal")
+    @ManyToOne
+    private Tiposucursal tipoSucursal;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idsucursal")
+    private Collection<Factura> facturaCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -244,6 +251,23 @@ public class Sucursales implements Serializable {
     @Override
     public String toString() {
         return "com.firefly.product.facturacion.negocio.entities.Sucursales[ idsucursal=" + idsucursal + " ]";
+    }
+
+    public Tiposucursal getTipoSucursal() {
+        return tipoSucursal;
+    }
+
+    public void setTipoSucursal(Tiposucursal tipoSucursal) {
+        this.tipoSucursal = tipoSucursal;
+    }
+
+    @XmlTransient
+    public Collection<Factura> getFacturaCollection() {
+        return facturaCollection;
+    }
+
+    public void setFacturaCollection(Collection<Factura> facturaCollection) {
+        this.facturaCollection = facturaCollection;
     }
     
 }

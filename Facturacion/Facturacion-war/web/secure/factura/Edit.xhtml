@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FacturaEditDlg" widgetVar="FacturaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditFacturaTitle}">
+            <h:form id="FacturaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="4" rendered="#{facturaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditFacturaLabel_consecutivo}" for="consecutivo" />
+                        <p:inputText id="consecutivo" disabled="true" value="#{facturaController.selected.consecutivo}" title="#{bundle.EditFacturaTitle_consecutivo}" required="true" requiredMessage="#{bundle.EditFacturaRequiredMessage_consecutivo}"/>
+                        <p:outputLabel value="#{bundle.EditFacturaLabel_fechaExpedicion}" for="fechaExpedicion" />
+                        <p:calendar id="fechaExpedicion" pattern="MM/dd/yyyy HH:mm:ss" value="#{facturaController.selected.fechaExpedicion}" title="#{bundle.EditFacturaTitle_fechaExpedicion}" required="true" requiredMessage="#{bundle.EditFacturaRequiredMessage_fechaExpedicion}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditFacturaLabel_observaciones}" for="observaciones" />
+                        <p:inputText id="observaciones" value="#{facturaController.selected.observaciones}" title="#{bundle.EditFacturaTitle_observaciones}" />
+                        <p:outputLabel value="#{bundle.EditFacturaLabel_idcliente}" for="idcliente" />
+                        <p:selectOneMenu id="idcliente" value="#{facturaController.selected.idcliente}" required="true" requiredMessage="#{bundle.EditFacturaRequiredMessage_idcliente}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{clientesController.itemsAvailableSelectOne}"
+                                           var="idclienteItem"
+                                           itemLabel="#{idclienteItem.razonSocial}#{idclienteItem.primerNombre} #{idclienteItem.primerApellido}"
+                                           itemValue="#{idclienteItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditFacturaLabel_idresolucion}" for="idresolucion" />
+                        <p:selectOneMenu id="idresolucion" value="#{facturaController.selected.idresolucion}" required="true" requiredMessage="#{bundle.EditFacturaRequiredMessage_idresolucion}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{resolucionfacturacionController.itemsAvailableSelectOne}"
+                                           var="idresolucionItem"
+                                           itemLabel="#{idresolucionItem.numeroResolucion}"
+                                           itemValue="#{idresolucionItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditFacturaLabel_idsucursal}" for="idsucursal" />
+                        <p:selectOneMenu id="idsucursal" value="#{facturaController.selected.idsucursal}" required="true" requiredMessage="#{bundle.EditFacturaRequiredMessage_idsucursal}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{sucursalesController.itemsAvailableSelectOne}"
+                                           var="idsucursalItem"
+                                           itemLabel="#{idsucursalItem.nombre}"
+                                           itemValue="#{idsucursalItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{facturaController.update}" value="#{bundle.Save}" update="display,:FacturaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'FacturaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="FacturaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

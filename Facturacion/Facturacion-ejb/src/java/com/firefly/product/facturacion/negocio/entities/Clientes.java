@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -58,6 +59,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Clientes.findByDepartamento", query = "SELECT c FROM Clientes c WHERE c.departamento = :departamento"),
     @NamedQuery(name = "Clientes.findByCiudad", query = "SELECT c FROM Clientes c WHERE c.ciudad = :ciudad")})
 public class Clientes implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente")
+    private Collection<Factura> facturaCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -353,6 +357,15 @@ public class Clientes implements Serializable {
     @Override
     public String toString() {
         return "com.firefly.product.facturacion.negocio.entities.Clientes[ idclientes=" + idclientes + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Factura> getFacturaCollection() {
+        return facturaCollection;
+    }
+
+    public void setFacturaCollection(Collection<Factura> facturaCollection) {
+        this.facturaCollection = facturaCollection;
     }
     
 }

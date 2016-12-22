@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FacturaCreateDlg" widgetVar="FacturaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateFacturaTitle}">
+            <h:form id="FacturaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="4" rendered="#{facturaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateFacturaLabel_consecutivo}" for="consecutivo" />
+                        <p:inputText disabled="true" id="consecutivo" value="#{facturaController.selected.consecutivo}" title="#{bundle.CreateFacturaTitle_consecutivo}" required="true" requiredMessage="#{bundle.CreateFacturaRequiredMessage_consecutivo}"/>
+                        <p:outputLabel value="#{bundle.CreateFacturaLabel_fechaExpedicion}" for="fechaExpedicion" />
+                        <p:calendar id="fechaExpedicion" pattern="MM/dd/yyyy HH:mm:ss" value="#{facturaController.selected.fechaExpedicion}" title="#{bundle.EditFacturaTitle_fechaExpedicion}" required="true" requiredMessage="#{bundle.EditFacturaRequiredMessage_fechaExpedicion}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateFacturaLabel_idcliente}" for="idcliente" />
+                        <p:selectOneMenu id="idcliente" value="#{facturaController.selected.idcliente}" required="true" requiredMessage="#{bundle.EditFacturaRequiredMessage_idcliente}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" noSelectionOption="true"/>
+                            <f:selectItems value="#{clientesController.itemsAvailableSelectOne}"
+                                           var="idclienteItem"
+                                           itemLabel="#{idclienteItem.razonSocial}#{idclienteItem.primerNombre} #{idclienteItem.primerApellido}"
+                                           itemValue="#{idclienteItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateFacturaLabel_idresolucion}" for="idresolucion" />
+                        <p:selectOneMenu id="idresolucion" value="#{facturaController.selected.idresolucion}" required="true" requiredMessage="#{bundle.EditFacturaRequiredMessage_idresolucion}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" noSelectionOption="true"/>
+                            <f:selectItems value="#{resolucionfacturacionController.itemsAvailableSelectOne}"
+                                           var="idresolucionItem"
+                                           itemLabel="#{idresolucionItem.numeroResolucion}"
+                                           itemValue="#{idresolucionItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateFacturaLabel_idsucursal}" for="idsucursal" />
+                        <p:selectOneMenu id="idsucursal" value="#{facturaController.selected.idsucursal}" required="true" requiredMessage="#{bundle.EditFacturaRequiredMessage_idsucursal}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" noSelectionOption="true"/>
+                            <f:selectItems value="#{sucursalesController.itemsAvailableSelectOne}"
+                                           var="idsucursalItem"
+                                           itemLabel="#{idsucursalItem.nombre}"
+                                           itemValue="#{idsucursalItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateFacturaLabel_observaciones}" for="observaciones" />
+                        <p:inputText id="observaciones" value="#{facturaController.selected.observaciones}" title="#{bundle.CreateFacturaTitle_observaciones}" />
+
+                    </p:panelGrid>
+                    <p:dataTable id="datalist2" value="#{facturaController.selected.detallefacturaCollection}" var="item"
+                                 rowKey="#{item.iddetalleFactura}" editMode="row" 
+                                 rows="15" editable="true" editingRow="true"
+                                 rowsPerPageTemplate="10,20,30,40,50" >
+
+                        <p:ajax event="rowEdit" listener="#{facturaController.onDetalleFacturaEdit}" update=":FacturaCreateForm:datalist2:totalPanelGrid,:FacturaCreateForm:datalist2,:growl" />
+
+                        <f:facet name="header">
+                            <p:commandButton value="#{bundle.Create}" partialSubmit="true"
+                                             actionListener="#{facturaController.createDetalle}" 
+                                             update=":FacturaCreateForm:datalist2:totalPanelGrid,:FacturaCreateForm:datalist2,:growl"/>
+                        </f:facet>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetallefacturaTitle_idservicio}"/>
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="idservicios" value="#{item.idservicio}" required="true" requiredMessage="#{bundle.CreateDetallefacturaRequiredMessage_idservicio}">
+                                        <p:ajax listener="#{facturaController.updateDetalleValueChangeListener}" update=":FacturaCreateForm:datalist2:totalPanelGrid,:FacturaCreateForm:datalist2,:growl" />
+                                        <f:selectItem itemLabel="#{bundle.SelectOneMessage}" noSelectionOption="true"/>
+                                        <f:selectItems value="#{serviciosController.itemsAvailableSelectOne}"
+                                                       var="idserviciosItem"
+                                                       itemLabel="#{idserviciosItem.nombre}"
+                                                       itemValue="#{idserviciosItem}"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.idservicio.nombre}"/>
+                                </f:facet>
+                            </p:cellEditor>
+
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetallefacturaTitle_cantidad}"/>
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="input">
+                                    <p:inputText id="cantidad" value="#{item.cantidad}" title="#{bundle.CreateDetallefacturaTitle_cantidad}" required="true" requiredMessage="#{bundle.CreateDetallefacturaRequiredMessage_cantidad}">
+                                        <p:ajax listener="#{facturaController.updateDetalleValueChangeListener}" update=":FacturaCreateForm:datalist2:totalPanelGrid,:FacturaCreateForm:datalist2,:growl" />
+                                    </p:inputText>
+                                </f:facet>
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.cantidad}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetallefacturaTitle_precioUnitario}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.precioUnitario}">
+                                <f:convertNumber type="currency" currencySymbol="$" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetallefacturaTitle_descuento}"/>
+                            </f:facet>
+                            <p:cellEditor>
+                                <f:facet name="input">
+                                    <p:inputText id="descuento" value="#{item.descuento}" title="#{bundle.CreateDetallefacturaTitle_descuento}" >
+                                        <p:ajax listener="#{facturaController.updateDetalleValueChangeListener}" update=":FacturaCreateForm:datalist2:totalPanelGrid,:FacturaCreateForm:datalist2,:growl" />
+                                    </p:inputText>
+                                </f:facet>
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.descuento}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetallefacturaTitle_totalImpuesto}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.totalImpuesto}">
+                                <f:convertNumber type="currency" currencySymbol="$" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetallefacturaTitle_total}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.total}">
+                                <f:convertNumber type="currency" currencySymbol="$" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column style="width:32px">
+                            <p:rowEditor />
+                        </p:column>
+
+                        <f:facet name="footer">
+                            <p:panelGrid columns="2" id="totalPanelGrid">
+                                <p:outputLabel value="#{bundle.CreateFacturaLabel_subTotal}" for="subTotal" />
+                                <h:outputText id="subTotal" value="#{facturaController.selected.subTotal}" >
+                                    <f:convertNumber type="currency" currencySymbol="$" />
+                                </h:outputText>
+                                <p:outputLabel value="#{bundle.CreateFacturaLabel_impuesto}" for="impuesto" />
+                                <h:outputText id="impuesto" value="#{facturaController.selected.impuesto}" >
+                                    <f:convertNumber type="currency" currencySymbol="$" />
+                                </h:outputText>
+                                <p:outputLabel value="#{bundle.CreateFacturaLabel_total}" for="totalFactura" />
+                                <h:outputText id="totalFactura" value="#{facturaController.selected.total}" >
+                                    <f:convertNumber type="currency" currencySymbol="$" />
+                                </h:outputText>
+
+                            </p:panelGrid>
+
+                        </f:facet>
+                        <!--f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{detallefacturaController.prepareCreate}" update=":DetallefacturaCreateForm" oncomplete="PF('DetallefacturaCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DetallefacturaViewForm" oncomplete="PF('DetallefacturaViewDialog').show()" disabled="#{empty detallefacturaController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":DetallefacturaEditForm" oncomplete="PF('DetallefacturaEditDialog').show()" disabled="#{empty detallefacturaController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{detallefacturaController.destroy}" update=":growl,datalist" disabled="#{empty detallefacturaController.selected}"/>
+                        </f:facet-->
+                    </p:dataTable>
+                    <p:commandButton actionListener="#{facturaController.create}" value="#{bundle.Save}" update="display,:FacturaListForm:datalist,:growl" oncomplete="handleSubmit(args,'FacturaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="FacturaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

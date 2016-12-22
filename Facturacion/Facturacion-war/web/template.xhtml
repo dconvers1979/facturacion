@@ -12,7 +12,7 @@
     </h:head>
 
     <h:body>
-        
+
         <p:growl id="growl" showDetail="true" life="5000" />
 
         <p:layout fullPage="true">
@@ -24,7 +24,7 @@
                             <p:separator />
                             <p:menuitem value="#{bundle.Logout}" action="#{userManager.logout()}"/>
                         </p:submenu>
-                        
+
                         <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
                         <p:submenu label="#{bundle.Maintenance}">
                             <p:menuitem value="Cargos" outcome="/secure/cargos/List.xhtml" />
@@ -46,24 +46,33 @@
                             <p:menuitem value="Sucursales" outcome="/secure/sucursales/List.xhtml" />
                             <p:menuitem value="Sucursales por empresa" outcome="/secure/sucursalesempresas/List.xhtml" />
                         </p:submenu>
-                        
+
                         <p:submenu label="#{bundle.Services}">
                             <p:menuitem value="Servicios" outcome="/secure/servicios/List.xhtml" />
                             <p:separator />
                             <p:menuitem value="Impuestos servicio" outcome="/secure/serviciosimpuestos/List.xhtml" />
                             <p:menuitem value="Servicios sucursal" outcome="/secure/sucursalesservicios/List.xhtml" />
                         </p:submenu>
-                        
+
                         <p:submenu label="#{bundle.Clients}">
                             <p:menuitem value="Clientes" outcome="/secure/clientes/List.xhtml" />
                             <p:separator />
+                            <p:menuitem value="Facturas" outcome="/secure/factura/List.xhtml" />
                         </p:submenu>
                     </p:menubar>
+
                 </h:form>
             </p:layoutUnit>
 
             <p:layoutUnit position="south" size="60">
                 <ui:insert name="footer"/>
+                <h:form>
+                    <p:dock >
+                        <p:menuitem value="Clientes" outcome="/secure/clientes/List.xhtml" />
+                        <p:menuitem value="Facturas" outcome="/secure/factura/List.xhtml" />
+                    </p:dock>
+                </h:form>
+
             </p:layoutUnit>
 
             <p:layoutUnit position="center">

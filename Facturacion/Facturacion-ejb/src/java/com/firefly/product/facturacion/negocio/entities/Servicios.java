@@ -6,7 +6,9 @@
 package com.firefly.product.facturacion.negocio.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,10 +18,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,6 +41,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Servicios.findByPrecioVenta", query = "SELECT s FROM Servicios s WHERE s.precioVenta = :precioVenta"),
     @NamedQuery(name = "Servicios.findByTipoCobro", query = "SELECT s FROM Servicios s WHERE s.tipoCobro = :tipoCobro")})
 public class Servicios implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idservicio")
+    private Collection<Detallefactura> detallefacturaCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -154,6 +161,15 @@ public class Servicios implements Serializable {
     @Override
     public String toString() {
         return "com.firefly.product.facturacion.negocio.entities.Servicios[ idServicios=" + idServicios + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Detallefactura> getDetallefacturaCollection() {
+        return detallefacturaCollection;
+    }
+
+    public void setDetallefacturaCollection(Collection<Detallefactura> detallefacturaCollection) {
+        this.detallefacturaCollection = detallefacturaCollection;
     }
     
 }

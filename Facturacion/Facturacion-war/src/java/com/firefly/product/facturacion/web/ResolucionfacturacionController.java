@@ -85,6 +85,9 @@ public class ResolucionfacturacionController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
+                if (persistAction == PersistAction.CREATE) {
+                    this.selected.setSecuencia(this.selected.getRangoInicial());
+                }
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
                 } else {

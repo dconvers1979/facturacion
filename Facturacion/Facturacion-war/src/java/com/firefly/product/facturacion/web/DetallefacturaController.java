@@ -1,8 +1,7 @@
-	package com.firefly.product.facturacion.web;
+package com.firefly.product.facturacion.web;
 
-import com.firefly.product.facturacion.negocio.entities.Servicios;
 import com.firefly.product.facturacion.negocio.entities.Detallefactura;
-import com.firefly.product.facturacion.negocio.session.ServiciosFacade;
+import com.firefly.product.facturacion.negocio.session.DetallefacturaFacade;
 import com.firefly.product.facturacion.web.util.JsfUtil;
 import com.firefly.product.facturacion.web.util.JsfUtil.PersistAction;
 
@@ -20,23 +19,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@Named("serviciosController")
+@Named("detallefacturaController")
 @SessionScoped
-public class ServiciosController implements Serializable {
+public class DetallefacturaController implements Serializable {
 
     @EJB
-    private ServiciosFacade ejbFacade;
-    private List<Servicios> items = null;
-    private Servicios selected;
+    private DetallefacturaFacade ejbFacade;
+    private List<Detallefactura> items = null;
+    private Detallefactura selected;
 
-    public ServiciosController() {
+    public DetallefacturaController() {
     }
 
-    public Servicios getSelected() {
+    public Detallefactura getSelected() {
         return selected;
     }
 
-    public void setSelected(Servicios selected) {
+    public void setSelected(Detallefactura selected) {
         this.selected = selected;
     }
 
@@ -46,36 +45,36 @@ public class ServiciosController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private ServiciosFacade getFacade() {
+    private DetallefacturaFacade getFacade() {
         return ejbFacade;
     }
 
-    public Servicios prepareCreate() {
-        selected = new Servicios();
+    public Detallefactura prepareCreate() {
+        selected = new Detallefactura();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ServiciosCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("DetallefacturaCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ServiciosUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("DetallefacturaUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ServiciosDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("DetallefacturaDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
-    
-    public List<Servicios> getItems() {
+
+    public List<Detallefactura> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
@@ -110,29 +109,29 @@ public class ServiciosController implements Serializable {
         }
     }
 
-    public Servicios getServicios(java.lang.Integer id) {
+    public Detallefactura getDetallefactura(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
-    public List<Servicios> getItemsAvailableSelectMany() {
+    public List<Detallefactura> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Servicios> getItemsAvailableSelectOne() {
+    public List<Detallefactura> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    @FacesConverter(forClass = Servicios.class)
-    public static class ServiciosControllerConverter implements Converter {
+    @FacesConverter(forClass = Detallefactura.class)
+    public static class DetallefacturaControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            ServiciosController controller = (ServiciosController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "serviciosController");
-            return controller.getServicios(getKey(value));
+            DetallefacturaController controller = (DetallefacturaController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "detallefacturaController");
+            return controller.getDetallefactura(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -152,11 +151,11 @@ public class ServiciosController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Servicios) {
-                Servicios o = (Servicios) object;
-                return getStringKey(o.getIdServicios());
+            if (object instanceof Detallefactura) {
+                Detallefactura o = (Detallefactura) object;
+                return getStringKey(o.getIddetalleFactura());
             } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Servicios.class.getName()});
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Detallefactura.class.getName()});
                 return null;
             }
         }

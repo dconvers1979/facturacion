@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FacturaViewDlg" widgetVar="FacturaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewFacturaTitle}">
+            <h:form id="FacturaViewForm">
+                <h:panelGroup id="display" >
+                    <p:panelGrid columns="2" rendered="#{facturaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewFacturaLabel_consecutivo}"/>
+                        <h:outputText value="#{facturaController.selected.consecutivo}" title="#{bundle.ViewFacturaTitle_consecutivo}"/>
+                        <h:outputText value="#{bundle.ViewFacturaLabel_fechaExpedicion}"/>
+                        <h:outputText value="#{facturaController.selected.fechaExpedicion}" title="#{bundle.ViewFacturaTitle_fechaExpedicion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewFacturaLabel_observaciones}"/>
+                        <h:outputText value="#{facturaController.selected.observaciones}" title="#{bundle.ViewFacturaTitle_observaciones}"/>
+                        <h:outputText value="#{bundle.ViewFacturaLabel_idcliente}"/>
+                        <h:outputText value="#{facturaController.selected.idcliente.razonSocial}#{facturaController.selected.idcliente.primerNombre} #{facturaController.selected.idcliente.primerApellido}" title="#{bundle.ViewFacturaTitle_idcliente}"/>
+                        <h:outputText value="#{bundle.ViewFacturaLabel_idresolucion}"/>
+                        <h:outputText value="#{facturaController.selected.idresolucion.numeroResolucion}" title="#{bundle.ViewFacturaTitle_idresolucion}"/>
+                        <h:outputText value="#{bundle.ViewFacturaLabel_idsucursal}"/>
+                        <h:outputText value="#{facturaController.selected.idsucursal.nombre}" title="#{bundle.ViewFacturaTitle_idsucursal}"/>
+                        <h:outputText value="#{bundle.ViewFacturaLabel_estado}"/>
+                        <p:selectOneMenu disabled="true" id="estado" value="#{facturaController.selected.estado}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="#{bundle.Fac1}" itemValue="1"/>
+                            <f:selectItem itemLabel="#{bundle.Fac2}" itemValue="2"/>
+                            <f:selectItem itemLabel="#{bundle.Fac3}" itemValue="3"/>
+                            <f:selectItem itemLabel="#{bundle.Fac4}" itemValue="4"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:dataTable id="datalist2" value="#{facturaController.selected.detallefacturaCollection}" var="item"
+                                 rowKey="#{item.iddetalleFactura}" 
+                                 rows="15" 
+                                 rowsPerPageTemplate="10,20,30,40,50" >
+                        <f:facet name="header">
+                            <p:commandButton value="#{bundle.Create}" partialSubmit="true"
+                                             actionListener="#{facturaController.createDetalle}" 
+                                             update=":FacturaCreateForm:datalist2,:growl"/>
+                        </f:facet>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetallefacturaTitle_idservicio}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idservicio.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetallefacturaTitle_cantidad}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cantidad}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetallefacturaTitle_descuento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descuento}">
+                                <f:convertNumber type="number" currencySymbol="%" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetallefacturaTitle_total}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.total}">
+                                <f:convertNumber type="currency" currencySymbol="$" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetallefacturaTitle_totalImpuesto}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.totalImpuesto}">
+                                <f:convertNumber type="currency" currencySymbol="$" />
+                            </h:outputText>
+                        </p:column>
+
+                        <f:facet name="footer">
+                            <p:outputLabel value="#{bundle.CreateFacturaLabel_subTotal}" for="subTotal" />
+                            <h:outputText id="subTotal" value="#{facturaController.selected.subTotal}" >
+                                <f:convertNumber type="currency" currencySymbol="$" />
+                            </h:outputText>
+                            <p:outputLabel value="#{bundle.CreateFacturaLabel_impuesto}" for="impuesto" />
+                            <h:outputText id="impuesto" value="#{facturaController.selected.impuesto}" >
+                                <f:convertNumber type="currency" currencySymbol="$" />
+                            </h:outputText>
+                            <p:outputLabel value="#{bundle.CreateFacturaLabel_total}" for="totalFactura" />
+                            <h:outputText id="totalFactura" value="#{facturaController.selected.total}" >
+                                <f:convertNumber type="currency" currencySymbol="$" />
+                            </h:outputText>
+
+                        </f:facet>
+                        <!--f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{detallefacturaController.prepareCreate}" update=":DetallefacturaCreateForm" oncomplete="PF('DetallefacturaCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DetallefacturaViewForm" oncomplete="PF('DetallefacturaViewDialog').show()" disabled="#{empty detallefacturaController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":DetallefacturaEditForm" oncomplete="PF('DetallefacturaEditDialog').show()" disabled="#{empty detallefacturaController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{detallefacturaController.destroy}" update=":growl,datalist" disabled="#{empty detallefacturaController.selected}"/>
+                        </f:facet-->
+                    </p:dataTable>
+                    <p:commandButton value="#{bundle.Close}" onclick="FacturaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
