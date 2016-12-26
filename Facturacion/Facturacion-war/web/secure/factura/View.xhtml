@@ -11,7 +11,7 @@
         <p:dialog id="FacturaViewDlg" widgetVar="FacturaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewFacturaTitle}">
             <h:form id="FacturaViewForm">
                 <h:panelGroup id="display" >
-                    <p:panelGrid columns="2" rendered="#{facturaController.selected != null}">
+                    <p:panelGrid columns="4" rendered="#{facturaController.selected != null}" >
                         <h:outputText value="#{bundle.ViewFacturaLabel_consecutivo}"/>
                         <h:outputText value="#{facturaController.selected.consecutivo}" title="#{bundle.ViewFacturaTitle_consecutivo}"/>
                         <h:outputText value="#{bundle.ViewFacturaLabel_fechaExpedicion}"/>
@@ -39,11 +39,6 @@
                                  rowKey="#{item.iddetalleFactura}" 
                                  rows="15" 
                                  rowsPerPageTemplate="10,20,30,40,50" >
-                        <f:facet name="header">
-                            <p:commandButton value="#{bundle.Create}" partialSubmit="true"
-                                             actionListener="#{facturaController.createDetalle}" 
-                                             update=":FacturaCreateForm:datalist2,:growl"/>
-                        </f:facet>
 
                         <p:column>
                             <f:facet name="header">
@@ -83,18 +78,20 @@
                         </p:column>
 
                         <f:facet name="footer">
-                            <p:outputLabel value="#{bundle.CreateFacturaLabel_subTotal}" for="subTotal" />
-                            <h:outputText id="subTotal" value="#{facturaController.selected.subTotal}" >
-                                <f:convertNumber type="currency" currencySymbol="$" />
-                            </h:outputText>
-                            <p:outputLabel value="#{bundle.CreateFacturaLabel_impuesto}" for="impuesto" />
-                            <h:outputText id="impuesto" value="#{facturaController.selected.impuesto}" >
-                                <f:convertNumber type="currency" currencySymbol="$" />
-                            </h:outputText>
-                            <p:outputLabel value="#{bundle.CreateFacturaLabel_total}" for="totalFactura" />
-                            <h:outputText id="totalFactura" value="#{facturaController.selected.total}" >
-                                <f:convertNumber type="currency" currencySymbol="$" />
-                            </h:outputText>
+                            <p:panelGrid columns="2" >
+                                <p:outputLabel value="#{bundle.CreateFacturaLabel_subTotal}" for="subTotal" />
+                                <h:outputText id="subTotal" value="#{facturaController.selected.subTotal}" >
+                                    <f:convertNumber type="currency" currencySymbol="$" />
+                                </h:outputText>
+                                <p:outputLabel value="#{bundle.CreateFacturaLabel_impuesto}" for="impuesto" />
+                                <h:outputText id="impuesto" value="#{facturaController.selected.impuesto}" >
+                                    <f:convertNumber type="currency" currencySymbol="$" />
+                                </h:outputText>
+                                <p:outputLabel value="#{bundle.CreateFacturaLabel_total}" for="totalFactura" />
+                                <h:outputText id="totalFactura" value="#{facturaController.selected.total}" >
+                                    <f:convertNumber type="currency" currencySymbol="$" />
+                                </h:outputText>
+                            </p:panelGrid>
 
                         </f:facet>
                         <!--f:facet name="footer">

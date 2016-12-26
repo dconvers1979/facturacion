@@ -2,8 +2,10 @@ package com.firefly.product.facturacion.web;
 
 import com.firefly.product.facturacion.negocio.entities.Detallefactura;
 import com.firefly.product.facturacion.negocio.entities.Factura;
+import com.firefly.product.facturacion.negocio.entities.Serviciosimpuestos;
 import com.firefly.product.facturacion.negocio.session.FacturaFacade;
 import com.firefly.product.facturacion.negocio.session.ResolucionfacturacionFacade;
+import com.firefly.product.facturacion.negocio.session.ServiciosimpuestosFacade;
 import com.firefly.product.facturacion.web.util.JsfUtil;
 import com.firefly.product.facturacion.web.util.JsfUtil.PersistAction;
 
@@ -31,6 +33,8 @@ public class FacturaController implements Serializable {
     private FacturaFacade ejbFacade;
     @EJB
     private ResolucionfacturacionFacade resolucionfacturacionFacade;
+    @EJB
+    private ServiciosimpuestosFacade serviciosimpuestosFacade;
     private List<Factura> items = null;
     private Factura selected;
 
@@ -109,13 +113,26 @@ public class FacturaController implements Serializable {
 
                 if (item.getIdservicio() != null) {
                     item.setPrecioUnitario(item.getIdservicio().getPrecioVenta());
-                    if(item.getDescuento()!=null && item.getDescuento()!=0){
-                        item.setTotal((item.getPrecioUnitario()*(100-item.getDescuento())/100) * item.getCantidad());
-                    }else{
+                    if (item.getDescuento() != null && item.getDescuento() != 0) {
+                        item.setTotal((item.getPrecioUnitario() * (100 - item.getDescuento()) / 100) * item.getCantidad());
+                    } else {
                         item.setTotal(item.getPrecioUnitario() * item.getCantidad());
                     }
-                    
-                    item.setTotalImpuesto(item.getTotal()); // TODO  
+
+                    Serviciosimpuestos serviciosimpuestos = new Serviciosimpuestos();
+                    serviciosimpuestos.setIdservicios(item.getIdservicio());
+
+                    List<Serviciosimpuestos> serviciosimpuestosList = serviciosimpuestosFacade.findAllImpuestosServicio(serviciosimpuestos);
+
+                    int impuestoTotal = 0;
+
+                    if (serviciosimpuestosList != null) {
+                        for (Serviciosimpuestos serviciosimpuestos1 : serviciosimpuestosList) {
+                            impuestoTotal += serviciosimpuestos1.getIdimpuestos().getPorcentaje();
+                        }
+                    }
+
+                    item.setTotalImpuesto(item.getTotal() * (100 + impuestoTotal) / 100); 
                     total += item.getTotal();
                     impuesto += item.getTotalImpuesto();
                 }
@@ -123,9 +140,9 @@ public class FacturaController implements Serializable {
             }
         }
 
-        this.selected.setSubTotal(total - impuesto);
-        this.selected.setImpuesto(impuesto);
-        this.selected.setTotal(total);
+        this.selected.setSubTotal(total);
+        this.selected.setImpuesto(impuesto - total);
+        this.selected.setTotal(impuesto);
     }
 
     public void onDetalleFacturaEdit(RowEditEvent event) {
@@ -148,7 +165,7 @@ public class FacturaController implements Serializable {
                 if (persistAction == PersistAction.CREATE) {
                     selected.setConsecutivo(selected.getIdresolucion().getPrefijo() + selected.getIdresolucion().getSecuencia());
                     selected.setEstado(1);
-                    selected.getIdresolucion().setSecuencia(selected.getIdresolucion().getSecuencia()+1);
+                    selected.getIdresolucion().setSecuencia(selected.getIdresolucion().getSecuencia() + 1);
                     resolucionfacturacionFacade.edit(selected.getIdresolucion());
                 }
                 if (persistAction != PersistAction.DELETE) {

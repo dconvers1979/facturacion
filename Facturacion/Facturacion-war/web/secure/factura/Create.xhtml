@@ -9,9 +9,9 @@
     <ui:composition>
 
         <p:dialog id="FacturaCreateDlg" widgetVar="FacturaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateFacturaTitle}">
-            <h:form id="FacturaCreateForm">
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="4" rendered="#{facturaController.selected != null}">
+            <h:form id="FacturaCreateForm" >
+                <h:panelGroup id="display" >
+                    <p:panelGrid columns="4" rendered="#{facturaController.selected != null}" >
                         <p:outputLabel value="#{bundle.CreateFacturaLabel_consecutivo}" for="consecutivo" />
                         <p:inputText disabled="true" id="consecutivo" value="#{facturaController.selected.consecutivo}" title="#{bundle.CreateFacturaTitle_consecutivo}" required="true" requiredMessage="#{bundle.CreateFacturaRequiredMessage_consecutivo}"/>
                         <p:outputLabel value="#{bundle.CreateFacturaLabel_fechaExpedicion}" for="fechaExpedicion" />
