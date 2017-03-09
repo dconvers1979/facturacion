@@ -13,13 +13,13 @@
                 <h:panelGroup id="display">
                     <p:panelGrid id="panel" columns="2" rendered="#{clientesController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateClientesLabel_tipoCliente}" for="tipoCliente" />
-                        <p:selectOneMenu valueChangeListener="#{clientesController.documentoValueChangeListener}"
-                                         id="tipoCliente" value="#{clientesController.selected.tipoCliente}" 
-                                         required="true" requiredMessage="#{bundle.CreateClientesRequiredMessage_tipoCliente}">
+                        <p:selectOneMenu 
+                            id="tipoCliente" value="#{clientesController.selected.tipoCliente}" 
+                            required="true" requiredMessage="#{bundle.CreateClientesRequiredMessage_tipoCliente}">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}" noSelectionOption="true"/>
                             <f:selectItem itemLabel="#{bundle.Person}" itemValue="1"/>
                             <f:selectItem itemLabel="#{bundle.Business}" itemValue="2"/>
-                            <f:ajax render="panel" />
+                            <p:ajax update="panel" listener="#{clientesController.documentoValueChangeListener}" />
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateClientesLabel_tipoDocumento}" for="tipoDocumento" />
                         <p:selectOneMenu id="tipoDocumento" value="#{clientesController.selected.tipoDocumento}" 

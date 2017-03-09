@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
-    <Scope Scope="Project"/>
+    <Scope Scope="Project">
+        <Node id="secure/usuariosroles/Edit.xhtml" x="150" y="1350" zoom="true"/>
+        <Node id="secure/servicios/Edit.xhtml" x="1650" y="450" zoom="true"/>
+        <Node id="secure/serviciosimpuestos/List.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="secure/impuesto/Edit.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="secure/sucursalesservicios/Create.xhtml" x="1150" y="1200" zoom="true"/>
+        <Node id="welcomePrimefaces.xhtml" x="2400" y="450" zoom="true"/>
+        <Node id="secure/servicios/Create.xhtml" x="1900" y="750" zoom="true"/>
+        <Node id="secure/serviciosimpuestos/View.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="secure/sucursalesempresas/Create.xhtml" x="150" y="1050" zoom="true"/>
+        <Node id="secure/servicios/View.xhtml" x="1900" y="150" zoom="true"/>
+        <Node id="secure/clasificacionproductos/List.xhtml" x="1150" y="600" zoom="true"/>
+        <Node id="secure/resolucionfacturacion/View.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="secure/resolucionfacturacion/Edit.xhtml" x="2650" y="300" zoom="true"/>
+        <Node id="secure/usuariosroles/List.xhtml" x="1650" y="300" zoom="true"/>
+        <Node id="secure/serviciosimpuestos/Edit.xhtml" x="2400" y="300" zoom="true"/>
+        <Node id="secure/roles/List.xhtml" x="1650" y="600" zoom="true"/>
+        <Node id="secure/clasificacionproductos/View.xhtml" x="900" y="1350" zoom="true"/>
+        <Node id="secure/tiposervicio/Edit.xhtml" x="650" y="1500" zoom="true"/>
+        <Node id="secure/impuesto/Create.xhtml" x="1650" y="900" zoom="true"/>
+        <Node id="index.html" x="1150" y="750" zoom="true"/>
+        <Node id="secure/usuariosroles/View.xhtml" x="650" y="900" zoom="true"/>
+        <Node id="secure/sucursales/Edit.xhtml" x="900" y="600" zoom="true"/>
+        <Node id="secure/empresas/Edit.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="secure/tiposervicio/List.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="secure/tiposervicio/View.xhtml" x="150" y="1800" zoom="true"/>
+        <Node id="index.xhtml" x="2150" y="150" zoom="true"/>
+        <Node id="secure/clientes/Create.xhtml" x="150" y="1650" zoom="true"/>
+        <Node id="secure/cargos/View.xhtml" x="900" y="750" zoom="true"/>
+        <Node id="secure/clientes/Edit.xhtml" x="400" y="1350" zoom="true"/>
+        <Node id="secure/sucursalesservicios/List.xhtml" x="900" y="900" zoom="true"/>
+        <Node id="secure/cargos/List.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="secure/roles/View.xhtml" x="2900" y="150" zoom="true"/>
+        <Node id="secure/clasificacionproductos/Create.xhtml" x="1900" y="600" zoom="true"/>
+        <Node id="secure/serviciosimpuestos/Create.xhtml" x="1150" y="1050" zoom="true"/>
+        <Node id="secure/tiposucursal/List.xhtml" x="400" y="1200" zoom="true"/>
+        <Node id="secure/detallefactura/Edit.xhtml" x="2650" y="150" zoom="true"/>
+        <Node id="secure/sucursalesservicios/View.xhtml" x="650" y="1050" zoom="true"/>
+        <Node id="secure/usuarios/Edit.xhtml" x="900" y="1200" zoom="true"/>
+        <Node id="secure/diaslaborales/Create.xhtml" x="650" y="1200" zoom="true"/>
+        <Node id="secure/tiposucursal/Create.xhtml" x="1400" y="600" zoom="true"/>
+        <Node id="secure/tiposucursal/View.xhtml" x="2150" y="600" zoom="true"/>
+        <Node id="secure/usuarios/Create.xhtml" x="150" y="1200" zoom="true"/>
+        <Node id="secure/diaslaborales/List.xhtml" x="400" y="900" zoom="true"/>
+        <Node id="secure/tiposervicio/Create.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="secure/diaslaborales/View.xhtml" x="1900" y="300" zoom="true"/>
+        <Node id="secure/resolucionfacturacion/Create.xhtml" x="1400" y="900" zoom="true"/>
+        <Node id="secure/sucursalesservicios/Edit.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="secure/empresas/Create.xhtml" x="150" y="1500" zoom="true"/>
+        <Node id="secure/diaslaborales/Edit.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="secure/sucursales/List.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="secure/roles/Create.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="secure/sucursalesempresas/List.xhtml" x="1400" y="750" zoom="true"/>
+        <Node id="secure/factura/List.xhtml" x="2150" y="300" zoom="true"/>
+        <Node id="secure/cargos/Create.xhtml" x="2150" y="450" zoom="true"/>
+        <Node id="template.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="secure/sucursalesempresas/View.xhtml" x="400" y="1500" zoom="true"/>
+        <Node id="secure/factura/View.xhtml" x="400" y="1650" zoom="true"/>
+        <Node id="secure/factura/Edit.xhtml" x="1900" y="450" zoom="true"/>
+        <Node id="secure/sucursalesempresas/Edit.xhtml" x="650" y="1350" zoom="true"/>
+        <Node id="secure/roles/Edit.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="secure/usuariosroles/Create.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="secure/factura/Create.xhtml" x="400" y="750" zoom="true"/>
+        <Node id="secure/usuarios/View.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="secure/clientes/View.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="secure/cargos/Edit.xhtml" x="2400" y="150" zoom="true"/>
+        <Node id="secure/clasificacionproductos/Edit.xhtml" x="900" y="1050" zoom="true"/>
+        <Node id="secure/sucursales/Create.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="secure/sucursales/View.xhtml" x="1150" y="300" zoom="true"/>
+        <Node id="secure/detallefactura/List.xhtml" x="1650" y="750" zoom="true"/>
+        <Node id="secure/usuarios/List.xhtml" x="1400" y="1050" zoom="true"/>
+        <Node id="secure/clientes/List.xhtml" x="3150" y="150" zoom="true"/>
+        <Node id="secure/servicios/List.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="secure/detallefactura/Create.xhtml" x="400" y="1050" zoom="true"/>
+        <Node id="secure/empresas/List.xhtml" x="1150" y="900" zoom="true"/>
+        <Node id="secure/empresas/View.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="secure/detallefactura/View.xhtml" x="1650" y="150" zoom="true"/>
+        <Node id="secure/resolucionfacturacion/List.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="secure/impuesto/View.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="secure/impuesto/List.xhtml" x="2900" y="300" zoom="true"/>
+        <Node id="secure/tiposucursal/Edit.xhtml" x="1400" y="450" zoom="true"/>
+    </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

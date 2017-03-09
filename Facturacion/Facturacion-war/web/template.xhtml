@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
@@ -9,11 +10,12 @@
         <title><ui:insert name="title">Default Title</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
+        <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/imagenes/firefly_logo.png" />
     </h:head>
 
     <h:body>
 
-        <p:growl id="growl" showDetail="true" life="5000" />
+        <p:growl id="growl" autoUpdate="true" globalOnly="false" showDetail="true" life="5000" />
 
         <p:layout fullPage="true">
             <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
@@ -22,7 +24,7 @@
                         <p:submenu label="#{bundle.Username} #{request.remoteUser}">
                             <p:menuitem value="#{bundle.Profile}" />
                             <p:separator />
-                            <p:menuitem value="#{bundle.Logout}" action="#{userManager.logout()}"/>
+                            <p:menuitem value="#{bundle.Logout}" action="#{userManager.logout}"/>
                         </p:submenu>
 
                         <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
@@ -55,9 +57,9 @@
                         </p:submenu>
 
                         <p:submenu label="#{bundle.Clients}">
-                            <p:menuitem value="Clientes" outcome="/secure/clientes/List.xhtml" />
+                            <p:menuitem value="Clientes" outcome="/secure/clientes/List.xhtml" icon="/resources/imagenes/clients.jpg"/>
                             <p:separator />
-                            <p:menuitem value="Facturas" outcome="/secure/factura/List.xhtml" />
+                            <p:menuitem value="Facturas" outcome="/secure/factura/List.xhtml" icon="/resources/imagenes/invoice.jfp"/>
                         </p:submenu>
                     </p:menubar>
 
@@ -66,10 +68,10 @@
 
             <p:layoutUnit position="south" size="60">
                 <ui:insert name="footer"/>
-                <h:form>
+                <h:form id="footerMenuTest">
                     <p:dock >
-                        <p:menuitem value="Clientes" outcome="/secure/clientes/List.xhtml" />
-                        <p:menuitem value="Facturas" outcome="/secure/factura/List.xhtml" />
+                        <p:menuitem value="Clientes" icon="/resources/imagenes/clients.jpg" outcome="/secure/clientes/List.xhtml" />
+                        <p:menuitem value="Facturas" icon="/resources/imagenes/invoice.jpg" outcome="/secure/factura/List.xhtml" />
                     </p:dock>
                 </h:form>
 

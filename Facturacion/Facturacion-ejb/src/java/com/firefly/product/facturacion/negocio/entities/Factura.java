@@ -46,7 +46,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Factura.findByTotal", query = "SELECT f FROM Factura f WHERE f.total = :total"),
     @NamedQuery(name = "Factura.findByEstado", query = "SELECT f FROM Factura f WHERE f.estado = :estado"),
     @NamedQuery(name = "Factura.findByModoPago", query = "SELECT f FROM Factura f WHERE f.modoPago = :modoPago"),
-    @NamedQuery(name = "Factura.findByFechaPago", query = "SELECT f FROM Factura f WHERE f.fechaPago = :fechaPago")})
+    @NamedQuery(name = "Factura.findByFechaPago", query = "SELECT f FROM Factura f WHERE f.fechaPago = :fechaPago"),
+    @NamedQuery(name = "Factura.findByCiiu", query = "SELECT f FROM Factura f WHERE f.ciiu = :ciiu")})
 public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -82,6 +83,9 @@ public class Factura implements Serializable {
     @Column(name = "fechaPago")
     @Temporal(TemporalType.DATE)
     private Date fechaPago;
+    @Size(max = 100)
+    @Column(name = "ciiu")
+    private String ciiu;
     @JoinColumn(name = "idcliente", referencedColumnName = "idclientes")
     @ManyToOne(optional = false)
     private Clientes idcliente;
@@ -185,6 +189,14 @@ public class Factura implements Serializable {
 
     public void setFechaPago(Date fechaPago) {
         this.fechaPago = fechaPago;
+    }
+
+    public String getCiiu() {
+        return ciiu;
+    }
+
+    public void setCiiu(String ciiu) {
+        this.ciiu = ciiu;
     }
 
     public Clientes getIdcliente() {

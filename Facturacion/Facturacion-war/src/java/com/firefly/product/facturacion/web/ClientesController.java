@@ -18,7 +18,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.faces.event.ValueChangeEvent;
 
 @Named("clientesController")
 @SessionScoped
@@ -127,7 +126,7 @@ public class ClientesController implements Serializable {
         return getFacade().findAllPersons();
     }
 
-    public void documentoValueChangeListener(ValueChangeEvent e) {
+    public void documentoValueChangeListener() {
         
         selected.setPrimerNombre(null);
         selected.setSegundoNombre(null);
